@@ -36,6 +36,16 @@ public class main_menu extends AppCompatActivity {
         startActivity(stats_screen);
     }
 
+    public void show_settings_dialog(View view){
+        final SettingsDialog settings_popup = new SettingsDialog(main_menu.this, prefs);
+        settings_popup.show_dialog();
+        settings_popup.close_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                settings_popup.dismiss_dialog();
+            }
+        });
+    }
+
     private void checkFirstRun() {
         // Get current version code
         int currentVersionCode = BuildConfig.VERSION_CODE;
