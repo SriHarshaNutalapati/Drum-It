@@ -6,4 +6,16 @@
 
     <!-- Colors added by developers -->
     <color name="white">#FFFFFF</color>
+
+    <!-- Bass Drum gradient background colors -->
+    <color name="bass_gradient_start_color">#36dad2</color>
+    <color name="bass_gradient_end_color">#5877e6</color>
+
+    <!-- Crash Cymbal gradient background colors -->
+    <color name="cymbal_gradient_start_color">#FFA000</color>
+    <color name="cymbal_gradient_end_color">#795548</color>
+
+    <!-- Snare Drum gradient background colors -->
+    <color name="snare_gradient_start_color">#ffda44</color>
+    <color name="snare_gradient_end_color">#957856</color>
 </resources>

@@ -56,7 +56,7 @@ public class main_menu extends AppCompatActivity {
             prefs.edit().putBoolean("music", true).apply();
             prefs.edit().putBoolean("sound", true).apply();
             prefs.edit().putBoolean("show_timer", true).apply();
-            prefs.edit().commit();
+            prefs.edit().apply();
         } else if (currentVersionCode >= savedVersionCode) {
             // This is just a normal run
             // No effect even if there is an upgrade as of now

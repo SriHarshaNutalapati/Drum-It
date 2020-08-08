@@ -7,67 +7,98 @@
     tools:context=".play_screen">
 
     <Button
-        android:id="@+id/bop_it"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:text="@string/bop_it"
-        android:onClick="bop_it_tapped"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/twist_it"
+        android:id="@+id/bass_it"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/bass_drum_bg"
+        android:onClick="bass_it_tapped"
+        app:layout_constraintBottom_toTopOf="@+id/bass_drum_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/snare_it"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/twist_it"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:text="@string/twist_it"
-        android:onClick="twist_it_tapped"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/snare_it"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/snare_drum_bg"
+        android:onClick="snare_it_tapped"
+        app:layout_constraintBottom_toTopOf="@+id/snare_drum_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/pull_it"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:text="@string/pull_it"
-        android:onClick="pull_it_tapped"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/crash_it"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/crash_cymbal_bg"
+        android:onClick="crash_it_tapped"
+        app:layout_constraintBottom_toTopOf="@+id/crash_cymbal_text_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/twist_it" />
+        app:layout_constraintStart_toEndOf="@+id/snare_it" />
 
     <TextView
         android:id="@+id/eng_selected_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="112dp"
-        android:text=""
+        android:text="Eng Selected"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/score_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/twist_it"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eng_selected_view" />
 
     <TextView
         android:id="@+id/timer_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:text=""
+        android:text="Timer"
         app:layout_constraintBottom_toTopOf="@+id/score_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eng_selected_view" />
+
+    <TextView
+        android:id="@+id/score_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score"
+        app:layout_constraintBottom_toTopOf="@+id/snare_it"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer_view" />
+
+    <TextView
+        android:id="@+id/bass_drum_text_view"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="68dp"
+        android:text="@string/bass_it"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/snare_drum_text_view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/snare_drum_text_view"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:text="@string/snare_it"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/crash_cymbal_text_view"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:text="@string/crash_it"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/snare_drum_text_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

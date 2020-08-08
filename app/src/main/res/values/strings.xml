@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Bop it, Twist it, Pull it</string>
-    <string name="bop_it">Bop it</string>
-    <string name="twist_it">Twist it</string>
-    <string name="pull_it">Pull it</string>
+    <string name="app_name">Bass it, Snare it, Crash it</string>
+    <string name="bass_it">Bass it</string>
+    <string name="snare_it">Snare it</string>
+    <string name="crash_it">Crash it</string>
 </resources>

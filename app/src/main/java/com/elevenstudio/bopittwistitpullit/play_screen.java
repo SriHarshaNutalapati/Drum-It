@@ -17,7 +17,7 @@ public class play_screen extends AppCompatActivity {
 
     private TextView eng_selected_view, score_view, timer_view;  // It is text view
 
-    private final String[] eng_selected_view_options = {"bop it", "twist it", "pull it"};
+    private final String[] eng_selected_view_options = {"bass it", "snare it", "crash it"};
 
     private Boolean game_started = false;
 
@@ -201,7 +201,7 @@ public class play_screen extends AppCompatActivity {
             prefs.edit().putInt("games_played", games_played + 1).apply();
             if(score_recorder > high_score) prefs.edit().putInt("high_score", score_recorder).apply();
             if(total_time_played > best_time) prefs.edit().putInt("best_time", total_time_played).apply();
-            prefs.edit().commit();
+            prefs.edit().apply();
         }
     }
 
@@ -213,9 +213,9 @@ public class play_screen extends AppCompatActivity {
             eng_selected_text = option_text;
             btn_tap_status = "nr";
             reduce_sleep_timer();
-            Log.d("Score", "Score: " + Integer.toString(score_recorder));
-            Log.d("Score", "Interval Score: " + Integer.toString(time_interval_gap_score_count));
-            Log.d("Score", "Interval Time: " + Integer.toString(eng_selected_view_change_timer));
+            Log.d("Score", "Score: " + score_recorder);
+            Log.d("Score", "Interval Score: " + time_interval_gap_score_count);
+            Log.d("Score", "Interval Time: " + eng_selected_view_change_timer);
             Log.d("Score", "=======================================================");
         }
 
@@ -230,22 +230,22 @@ public class play_screen extends AppCompatActivity {
         return eng_selected_view_options[rnd];
     }
 
-    public void bop_it_tapped(View view){
-        btn_tap_status = eng_selected_text.equals("bop it")? "ga" : "ed";
+    public void bass_it_tapped(View view){
+        btn_tap_status = eng_selected_text.equals("bass it")? "ga" : "ed";
         if (!end_game()) {
             set_score();
         }
     }
 
-    public void twist_it_tapped(View view){
-        btn_tap_status = eng_selected_text.equals("twist it")? "ga" : "ed";
+    public void snare_it_tapped(View view){
+        btn_tap_status = eng_selected_text.equals("snare it")? "ga" : "ed";
         if (!end_game()) {
                 set_score();
         }
     }
 
-    public void pull_it_tapped(View view){
-        btn_tap_status = eng_selected_text.equals("pull it")? "ga" : "ed";
+    public void crash_it_tapped(View view){
+        btn_tap_status = eng_selected_text.equals("crash it")? "ga" : "ed";
         if (!end_game()) {
             set_score();
         }
