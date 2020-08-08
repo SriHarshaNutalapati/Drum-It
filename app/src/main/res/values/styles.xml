@@ -1,10 +1,21 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme" parent= "AppBaseTheme">
+        <item name="android:textViewStyle">@style/AudioWireTextView</item>
+        <item name="android:buttonStyle">@style/AudioWireButton</item>
+    </style>
+    <style name="AudioWireTextView" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/audiowide</item>
+    </style>
+    <style name="AudioWireButton" parent="android:Widget.Button">
+        <item name="android:fontFamily">@font/audiowide</item>
     </style>
 
 </resources>
