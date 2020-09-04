@@ -1,6 +1,63 @@
 <resources>
-    <string name="app_name">Bass it, Snare it, Crash it</string>
-    <string name="bass_it">Bass it</string>
+    <string name="app_name">Kick it, Snare it, Crash it</string>
+    <string name="kick_it">Kick it</string>
     <string name="snare_it">Snare it</string>
     <string name="crash_it">Crash it</string>
+
+    <!-- Preferences names -->
+    <string name="classic_mode_stats">classic_mode_stats</string>
+    <string name="survival_mode_stats">survival_mode_stats</string>
+    <string name="hi_lo_mode_stats">hi_lo_mode_stats</string>
+    <string name="game_settings">game_settings</string>
+
+    <!--User settings-->
+    <string name="sound_setting">sound_setting</string>
+    <string name="music_setting">music_setting</string>
+    <string name="show_timer_setting">show_timer_setting</string>
+    <string name="version_code">version_code</string>
+    <string name="selected_mode_setting">selected_mode_setting</string>
+
+    <!-- Stats (stored in user preferences) keys -->
+    <!-- Classic mode stats -->
+    <string name="classic_games_played">games_played</string>
+    <string name="classic_high_score">high_score</string>
+    <string name="classic_best_time">best_time</string>
+    <string name="classic_avg_time">average_time</string>
+    <string name="classic_avg_score">average_score</string>
+    <string name="classic_total_time">total_time</string>
+
+    <!--Survival mode stats-->
+    <string name="survival_games_played">games_played</string>
+    <string name="survival_best_time">best_survival</string>
+    <string name="survival_avg_time">average_survival</string>
+
+    <!-- Hi-lo mode stats -->
+    <string name="hi_lo_games_played">games_played</string>
+    <string name="hi_lo_high_score">high_score</string>
+    <string name="hi_lo_best_time">best_time</string>
+    <string name="hi_lo_avg_time">average_time</string>
+    <string name="hi_lo_avg_score">average_score</string>
+    <string name="hi_lo_total_time">total_time</string>
+
+    <!-- Mode names(used as keys in prefs) -->
+    <string name="classic_mode">ClassicMode</string>
+    <string name="survival_mode">SurvivalMode</string>
+    <string name="hi_lo_mode">HiLoMode</string>
+
+    <!-- Mode names(shown to user) -->
+    <string name="classic_mode_ui">Classic</string>
+    <string name="survival_mode_ui">Survival</string>
+    <string name="hi_lo_mode_ui">Hi-Lo</string>
+
+    <!-- Stats screen -->
+    <string name="games_played">Games played</string>
+    <string name="high_score">High score</string>
+    <string name="best_time">Best time</string>
+    <string name="avg_time">Average time</string>
+    <string name="avg_score">Average score</string>
+    <string name="total_time">Total time</string>
+
+    <string name="best_survival">Best survival</string>
+    <string name="avg_survival">Average survival</string>
+
 </resources>

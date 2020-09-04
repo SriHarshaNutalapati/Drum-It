@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit;
+package com.elevenstudio.bopittwistitpullit.utility;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,18 +9,21 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.elevenstudio.bopittwistitpullit.R;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class SettingsDialog extends AlertDialog {
+    private GameSettings game_settings;
     private AlertDialog.Builder alert_builder;
     private View layout_view;
     private AlertDialog dialog;
 
     // Views
     private Switch show_timer_switch, music_switch, sound_switch;
-    protected Button close_btn;
+    public Button close_btn;
 
-    protected SettingsDialog(Context context, final SharedPreferences prefs) {
+    public SettingsDialog(Context context) {
         super(context);
         alert_builder = new AlertDialog.Builder(context);
         layout_view = getLayoutInflater().inflate(R.layout.settings_dialog, null);
@@ -29,35 +32,33 @@ public class SettingsDialog extends AlertDialog {
         music_switch = layout_view.findViewById(R.id.music_switch);
         sound_switch = layout_view.findViewById(R.id.sound_switch);
         close_btn = layout_view.findViewById(R.id.close_btn);
+        game_settings = new GameSettings(context);
 
         // switch listeners
-        show_timer_switch.setChecked(prefs.getBoolean("show_timer", true));
+        show_timer_switch.setChecked(game_settings.getShow_timer());
         show_timer_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 //commit prefs on change
-                prefs.edit().putBoolean("show_timer", isChecked).apply();
-                prefs.edit().commit();
+                game_settings.updateShowTimerSetting(isChecked);
             }
         });
 
-        music_switch.setChecked(prefs.getBoolean("music", true));
+        music_switch.setChecked(game_settings.getMusic());
         music_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 //commit prefs on change
-                prefs.edit().putBoolean("music", isChecked).apply();
-                prefs.edit().commit();
+                game_settings.updateMusicSetting(isChecked);
             }
         });
 
-        sound_switch.setChecked(prefs.getBoolean("sound", true));
+        sound_switch.setChecked(game_settings.getMusic());
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 //commit prefs on change
-                prefs.edit().putBoolean("sound", isChecked).apply();
-                prefs.edit().commit();
+                game_settings.updateSoundSetting(isChecked);
             }
         });
     }

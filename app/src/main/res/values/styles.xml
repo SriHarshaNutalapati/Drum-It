@@ -18,4 +18,8 @@
         <item name="android:fontFamily">@font/audiowide</item>
     </style>
 
+    <style name="LayoutStyle" parent="@android:style/Widget">
+        <item name="android:background">@color/layout_bg_color</item>
+    </style>
+
 </resources>

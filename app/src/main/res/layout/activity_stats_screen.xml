@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".stats_screen">
+    tools:context=".activities.StatsScreen">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_guideline"
@@ -20,169 +20,294 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="25dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal"
-        android:weightSum="6"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
-        app:layout_constraintStart_toStartOf="@+id/left_guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/high_score_layout">
+    <Spinner
+        android:id="@+id/mode_select_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/right_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_guideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/classic_mode_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@id/right_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_guideline"
+        app:layout_constraintTop_toBottomOf="@id/mode_select_spinner">
 
         <TextView
-            android:id="@+id/high_score_head"
-            android:layout_width="0dp"
+            android:id="@+id/classic_games_played"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="High Score" />
+            android:text="@string/games_played"
+            app:layout_constraintEnd_toStartOf="@id/classic_games_played_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/high_score_view"
-            android:layout_width="0dp"
+            android:id="@+id/classic_games_played_value"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="TextView" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal"
-        android:weightSum="6"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
-        app:layout_constraintStart_toStartOf="@+id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/high_score_layout"
-        android:id="@+id/best_time_layout">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/classic_games_played"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/best_time_head"
-            android:layout_width="0dp"
+            android:id="@+id/classic_high_score"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="Best Time" />
+            android:text="@string/high_score"
+            app:layout_constraintEnd_toStartOf="@id/classic_high_score_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/classic_games_played" />
 
         <TextView
-            android:id="@+id/best_time_view"
-            android:layout_width="0dp"
+            android:id="@+id/classic_high_score_value"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="TextView" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal"
-        android:weightSum="6"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
-        app:layout_constraintStart_toStartOf="@+id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/best_time_layout"
-        android:id="@+id/avg_score_layout">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/classic_high_score"
+            app:layout_constraintTop_toBottomOf="@id/classic_games_played_value" />
 
         <TextView
-            android:id="@+id/avg_score_head"
-            android:layout_width="0dp"
+            android:id="@+id/classic_best_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="Average Score" />
+            android:text="@string/best_time"
+            app:layout_constraintEnd_toStartOf="@id/classic_best_time_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/classic_high_score" />
 
         <TextView
-            android:id="@+id/avg_score_view"
-            android:layout_width="0dp"
+            android:id="@+id/classic_best_time_value"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="TextView" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal"
-        android:weightSum="6"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
-        app:layout_constraintStart_toStartOf="@+id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/avg_score_layout"
-        android:id="@+id/avg_time_layout">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/classic_best_time"
+            app:layout_constraintTop_toBottomOf="@id/classic_high_score_value" />
 
         <TextView
-            android:id="@+id/avg_time_head"
-            android:layout_width="0dp"
+            android:id="@+id/classic_avg_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="Avg Time" />
+            android:text="@string/avg_time"
+            app:layout_constraintEnd_toStartOf="@id/classic_avg_time_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/classic_best_time" />
 
         <TextView
-            android:id="@+id/avg_time_view"
-            android:layout_width="0dp"
+            android:id="@+id/classic_avg_time_value"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="TextView" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal"
-        android:weightSum="6"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
-        app:layout_constraintStart_toStartOf="@+id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/avg_time_layout"
-        android:id="@+id/games_played_layout">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/classic_avg_time"
+            app:layout_constraintTop_toBottomOf="@id/classic_best_time_value" />
 
         <TextView
-            android:id="@+id/games_played_head"
-            android:layout_width="0dp"
+            android:id="@+id/classic_avg_score"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="Games Played" />
+            android:text="@string/avg_score"
+            app:layout_constraintEnd_toStartOf="@id/classic_avg_score_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/classic_avg_time" />
 
         <TextView
-            android:id="@+id/games_played_view"
-            android:layout_width="0dp"
+            android:id="@+id/classic_avg_score_value"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="TextView" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/classic_avg_score"
+            app:layout_constraintTop_toBottomOf="@id/classic_avg_time_value" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/classic_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_time"
+            app:layout_constraintEnd_toStartOf="@id/classic_total_time_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/classic_avg_score" />
+
+        <TextView
+            android:id="@+id/classic_total_time_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/classic_total_time"
+            app:layout_constraintTop_toBottomOf="@id/classic_avg_score_value" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/survival_mode_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@id/right_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_guideline"
+        app:layout_constraintTop_toBottomOf="@id/mode_select_spinner">
+
+        <TextView
+            android:id="@+id/survival_games_played"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/games_played"
+            app:layout_constraintEnd_toStartOf="@id/survival_games_played_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/survival_games_played_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/survival_games_played"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/survival_best_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/best_survival"
+            app:layout_constraintEnd_toStartOf="@id/survival_best_time_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/survival_games_played" />
+
+        <TextView
+            android:id="@+id/survival_best_time_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/survival_best_time"
+            app:layout_constraintTop_toBottomOf="@id/survival_games_played_value" />
+
+        <TextView
+            android:id="@+id/survival_avg_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/avg_survival"
+            app:layout_constraintEnd_toStartOf="@id/survival_avg_time_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/survival_best_time" />
+
+        <TextView
+            android:id="@+id/survival_avg_time_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/survival_avg_time"
+            app:layout_constraintTop_toBottomOf="@id/survival_best_time_value" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hi_lo_mode_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@id/right_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_guideline"
+        app:layout_constraintTop_toBottomOf="@id/mode_select_spinner">
+
+        <TextView
+            android:id="@+id/hi_lo_games_played"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/games_played"
+            app:layout_constraintEnd_toStartOf="@id/hi_lo_games_played_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hi_lo_games_played_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hi_lo_games_played"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hi_lo_high_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/high_score"
+            app:layout_constraintEnd_toStartOf="@id/hi_lo_high_score_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_games_played" />
+
+        <TextView
+            android:id="@+id/hi_lo_high_score_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hi_lo_high_score"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_games_played_value" />
+
+        <TextView
+            android:id="@+id/hi_lo_best_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/best_time"
+            app:layout_constraintEnd_toStartOf="@id/hi_lo_best_time_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_high_score" />
+
+        <TextView
+            android:id="@+id/hi_lo_best_time_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hi_lo_best_time"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_high_score_value" />
+
+        <TextView
+            android:id="@+id/hi_lo_avg_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/avg_time"
+            app:layout_constraintEnd_toStartOf="@id/hi_lo_avg_time_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_best_time" />
+
+        <TextView
+            android:id="@+id/hi_lo_avg_time_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hi_lo_avg_time"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_best_time_value" />
+
+        <TextView
+            android:id="@+id/hi_lo_avg_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/avg_score"
+            app:layout_constraintEnd_toStartOf="@id/hi_lo_avg_score_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_avg_time" />
+
+        <TextView
+            android:id="@+id/hi_lo_avg_score_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hi_lo_avg_score"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_avg_time_value" />
+
+        <TextView
+            android:id="@+id/hi_lo_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_time"
+            app:layout_constraintEnd_toStartOf="@id/hi_lo_total_time_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_avg_score" />
+
+        <TextView
+            android:id="@+id/hi_lo_total_time_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hi_lo_total_time"
+            app:layout_constraintTop_toBottomOf="@id/hi_lo_avg_score_value" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

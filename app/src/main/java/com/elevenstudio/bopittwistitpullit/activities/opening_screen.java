@@ -1,11 +1,12 @@
-package com.elevenstudio.bopittwistitpullit;
+package com.elevenstudio.bopittwistitpullit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
+
+import com.elevenstudio.bopittwistitpullit.R;
 
 public class opening_screen extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class opening_screen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent main_menu = new Intent(opening_screen.this, main_menu.class);
+                Intent main_menu = new Intent(opening_screen.this, MainMenu.class);
                 startActivity(main_menu);
                 finish();
             }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:layout_weight="6"
+    android:paddingBottom="25dp"
+    android:paddingTop="25dp">
+
+    <RadioGroup
+        android:id="@+id/game_mode_radio_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/mode_right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/mode_left_guideline"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/classic_mode_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="?android:selectableItemBackground"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:fontFamily="@font/audiowide"
+            android:layoutDirection="rtl"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/classic_mode_ui"
+            android:textAlignment="textStart" />
+
+        <RadioButton
+            android:id="@+id/survival_mode_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="?android:selectableItemBackground"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:fontFamily="@font/audiowide"
+            android:layoutDirection="rtl"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/survival_mode_ui"
+            android:textAlignment="textStart" />
+
+        <RadioButton
+            android:id="@+id/hi_lo_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="?android:selectableItemBackground"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:fontFamily="@font/audiowide"
+            android:layoutDirection="rtl"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/hi_lo_mode_ui"
+            android:textAlignment="textStart" />
+
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/mode_right_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="25dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/mode_left_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="25dp" />
+
+    <Button
+        android:id="@+id/mode_dialog_close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Close"
+        app:layout_constraintEnd_toStartOf="@+id/mode_right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/mode_left_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/game_mode_radio_group" />
+</androidx.constraintlayout.widget.ConstraintLayout>
