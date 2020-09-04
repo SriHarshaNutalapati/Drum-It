@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main_menu">
+    tools:context=".activities.MainMenu"
+    style="@style/LayoutStyle">
 
     <ImageView
         android:id="@+id/game_logo_img"
@@ -34,11 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Stats"
         android:onClick="startStats"
+        android:text="Stats"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play_button" />
+        app:layout_constraintTop_toBottomOf="@+id/mode_selector_btn" />
 
     <Button
         android:id="@+id/settings_button"
@@ -50,4 +51,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stats_button" />
+
+    <Button
+        android:id="@+id/mode_selector_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Mode"
+        android:onClick="show_mode_dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/play_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
-    android:layout_weight="6">
+    android:layout_weight="6"
+    android:paddingBottom="30dp"
+    android:paddingTop="30dp">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginTop="60dp"
         android:orientation="horizontal"
         android:weightSum="6"
         android:id="@+id/show_timer_layout"
@@ -23,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/audiowide"
             android:layout_weight="6"
             android:paddingEnd="50dp"
             android:paddingStart="50dp"
@@ -31,12 +33,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/music_layout"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginTop="60dp"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:weightSum="6"
-        android:id="@+id/music_layout"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toBottomOf="@+id/show_timer_layout">
@@ -46,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/audiowide"
             android:layout_weight="6"
             android:paddingEnd="50dp"
             android:paddingStart="50dp"
@@ -54,12 +57,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/sound_layout"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginTop="60dp"
         android:orientation="horizontal"
         android:weightSum="6"
-        android:id="@+id/sound_layout"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toBottomOf="@+id/music_layout">
@@ -70,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="6"
+            android:fontFamily="@font/audiowide"
             android:paddingEnd="50dp"
             android:paddingStart="50dp"
             android:text="Sound" />
@@ -94,7 +97,7 @@
         android:id="@+id/close_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="15dp"
         android:text="Close"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"

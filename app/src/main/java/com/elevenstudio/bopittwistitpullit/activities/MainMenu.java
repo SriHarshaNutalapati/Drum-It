@@ -1,47 +1,56 @@
-package com.elevenstudio.bopittwistitpullit;
+package com.elevenstudio.bopittwistitpullit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class main_menu extends AppCompatActivity {
+import com.elevenstudio.bopittwistitpullit.BuildConfig;
+import com.elevenstudio.bopittwistitpullit.R;
+import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
+import com.elevenstudio.bopittwistitpullit.utility.ModeSelectorDialog;
+import com.elevenstudio.bopittwistitpullit.utility.SettingsDialog;
 
-    // for preferences
-    final String PREFS_NAME = "com.elevenstudios.btp";
-    final String PREF_VERSION_CODE_KEY = "version_code";
-    final int DOESNT_EXIST = -1;
-    private SharedPreferences prefs;
+public class MainMenu extends AppCompatActivity {
+
+    private GameSettings game_settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
+        game_settings = new GameSettings(MainMenu.this);
         checkFirstRun();
     }
 
     public void startPlay(View view){
-        Intent play_screen = new Intent(main_menu.this, play_screen.class);
+        Intent play_screen = new Intent(MainMenu.this, PlayScreen.class);
         startActivity(play_screen);
     }
 
     public void startStats(View view){
-        Intent stats_screen = new Intent(main_menu.this, stats_screen.class);
+        Intent stats_screen = new Intent(MainMenu.this, StatsScreen.class);
         startActivity(stats_screen);
     }
 
     public void show_settings_dialog(View view){
-        final SettingsDialog settings_popup = new SettingsDialog(main_menu.this, prefs);
+        final SettingsDialog settings_popup = new SettingsDialog(MainMenu.this);
         settings_popup.show_dialog();
         settings_popup.close_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 settings_popup.dismiss_dialog();
+            }
+        });
+    }
+
+    public void show_mode_dialog(View view){
+        final ModeSelectorDialog mode_dialog = new ModeSelectorDialog(MainMenu.this, game_settings);
+        mode_dialog.show_dialog();
+        mode_dialog.close_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mode_dialog.dismiss_dialog();
             }
         });
     }
@@ -51,22 +60,12 @@ public class main_menu extends AppCompatActivity {
         int currentVersionCode = BuildConfig.VERSION_CODE;
 
         // Get saved version code
-        prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        int savedVersionCode = prefs.getInt(PREF_VERSION_CODE_KEY, DOESNT_EXIST);
+        int savedVersionCode = game_settings.getCurrentVersion();
 
         // Check for first run or upgrade
-        if (savedVersionCode == DOESNT_EXIST) {
+        if (savedVersionCode == -1) {
             // This is a new install (or the user cleared the shared preferences)
-            Toast.makeText(main_menu.this, "This is first time", Toast.LENGTH_LONG).show();  // Remove This
-            prefs.edit().putInt("high_score", 0).apply(); // set high score to 0
-            prefs.edit().putInt("best_time", 0).apply();
-            prefs.edit().putInt("score_avg",0).apply();
-            prefs.edit().putInt("time_avg", 0).apply();
-            prefs.edit().putInt("games_played", 0).apply();
-            prefs.edit().putBoolean("music", true).apply();
-            prefs.edit().putBoolean("sound", true).apply();
-            prefs.edit().putBoolean("show_timer", true).apply();
-            prefs.edit().apply();
+            Toast.makeText(MainMenu.this, "This is first time", Toast.LENGTH_LONG).show();  // Remove This
         } else if (currentVersionCode >= savedVersionCode) {
             // This is just a normal run
             // No effect even if there is an upgrade as of now
@@ -81,6 +80,6 @@ public class main_menu extends AppCompatActivity {
         */
 
         // Update the shared preferences with the current version code
-        prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).apply();
+        game_settings.updateVersionCode(currentVersionCode);
     }
 }

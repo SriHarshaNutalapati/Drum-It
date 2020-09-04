@@ -10,10 +10,10 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".stats_screen"></activity>
-        <activity android:name=".main_menu" />
+        <activity android:name=".activities.StatsScreen"></activity>
+        <activity android:name=".activities.MainMenu" />
         <activity
-            android:name=".opening_screen"
+            android:name=".activities.opening_screen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".play_screen"
+            android:name=".activities.PlayScreen"
             android:screenOrientation="portrait" />
 
         <meta-data
