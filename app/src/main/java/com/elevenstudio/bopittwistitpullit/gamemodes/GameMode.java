@@ -20,4 +20,9 @@ public class GameMode {
     }
 
     public void update_stats_in_prefs(int score){}
+
+    public void displayEndGameDialog(String msg, int score) {
+    }
+
+    public void resumeTimer(){}
 }

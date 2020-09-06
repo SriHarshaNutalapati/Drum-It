@@ -23,6 +23,8 @@
     <Spinner
         android:id="@+id/mode_select_spinner"
         android:layout_width="0dp"
+        android:visibility="visible"
+        android:layout_marginTop="20sp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/right_guideline"
         app:layout_constraintStart_toEndOf="@id/left_guideline"
@@ -31,7 +33,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/classic_mode_layout"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
         app:layout_constraintEnd_toStartOf="@id/right_guideline"
         app:layout_constraintStart_toEndOf="@id/left_guideline"
         app:layout_constraintTop_toBottomOf="@id/mode_select_spinner">
@@ -121,28 +124,13 @@
             app:layout_constraintStart_toEndOf="@id/classic_avg_score"
             app:layout_constraintTop_toBottomOf="@id/classic_avg_time_value" />
 
-        <TextView
-            android:id="@+id/classic_total_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_time"
-            app:layout_constraintEnd_toStartOf="@id/classic_total_time_value"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/classic_avg_score" />
-
-        <TextView
-            android:id="@+id/classic_total_time_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/classic_total_time"
-            app:layout_constraintTop_toBottomOf="@id/classic_avg_score_value" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/survival_mode_layout"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
         app:layout_constraintEnd_toStartOf="@id/right_guideline"
         app:layout_constraintStart_toEndOf="@id/left_guideline"
         app:layout_constraintTop_toBottomOf="@id/mode_select_spinner">
@@ -202,7 +190,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/hi_lo_mode_layout"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
         app:layout_constraintEnd_toStartOf="@id/right_guideline"
         app:layout_constraintStart_toEndOf="@id/left_guideline"
         app:layout_constraintTop_toBottomOf="@id/mode_select_spinner">

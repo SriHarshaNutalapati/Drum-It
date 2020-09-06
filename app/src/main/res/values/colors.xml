@@ -20,4 +20,6 @@
     <color name="snare_gradient_end_color">#957856</color>
 
     <color name="layout_bg_color">#661d26</color>
+
+    <color name="trans_parent">#00FFFFFF</color>
 </resources>

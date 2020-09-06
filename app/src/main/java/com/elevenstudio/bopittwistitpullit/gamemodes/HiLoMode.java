@@ -1,6 +1,7 @@
 package com.elevenstudio.bopittwistitpullit.gamemodes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.util.Log;
@@ -8,19 +9,23 @@ import android.view.View;
 import android.widget.Chronometer;
 
 import com.elevenstudio.bopittwistitpullit.R;
+import com.elevenstudio.bopittwistitpullit.activities.MainMenu;
+import com.elevenstudio.bopittwistitpullit.activities.PlayScreen;
+import com.elevenstudio.bopittwistitpullit.utility.EndGameDialog;
 import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
 
 import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
 
-class HiLoMode extends GameMode{
+public class HiLoMode extends GameMode{
     // game settings
     private GameSettings game_settings;
     // preferences (HiLo mode stats)
     private SharedPreferences hi_lo_mode_prefs;
 
     private Chronometer timer_view;
+    private int mTimeWhenStopped = 0;
     private Random rand_obj = new Random();
     int rand_num;
     private int time_interval_gap_teller = rand_obj.nextInt((5 - 1) + 1) + 1;;
@@ -50,6 +55,10 @@ class HiLoMode extends GameMode{
         }
     }
 
+    public static SharedPreferences get_hi_lo_mode_prefs(Context context){
+        return context.getSharedPreferences(context.getResources().getString(R.string.hi_lo_mode_stats), MODE_PRIVATE);
+    }
+
     public int get_delay_time(int score){
         this.reduce_sleep_timer(score);
         return getEng_selected_view_change_timer();
@@ -60,12 +69,42 @@ class HiLoMode extends GameMode{
     }
 
     public void startTimer(){
+        timer_view.setBase(SystemClock.elapsedRealtime() - mTimeWhenStopped);
+        timer_view.start();
+    }
+
+    public void resumeTimer(){
+        timer_view.setBase(SystemClock.elapsedRealtime() - mTimeWhenStopped);
         timer_view.start();
     }
 
     public void stopTimer(){
         timer_view.stop();
+        mTimeWhenStopped = (int) (SystemClock.elapsedRealtime() - timer_view.getBase());
         elapsedMilliSecSinceStart = (int) (SystemClock.elapsedRealtime() - timer_view.getBase());
+    }
+
+    public void displayEndGameDialog(String msg, int score) {
+        final EndGameDialog endGameDialog = new EndGameDialog(context);
+        endGameDialog.show_dialog(msg);
+        String extra_msg = "";
+        if(hi_lo_mode_prefs.getInt(context.getResources().getString(R.string.hi_lo_high_score), 0) == score) extra_msg = "(High score)";
+        endGameDialog.score_View.setText("Score: " + score + " " + extra_msg);
+        endGameDialog.main_menu_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                endGameDialog.dismiss_dialog();
+                Intent main_menu_screen = new Intent(context, MainMenu.class);
+                context.startActivity(main_menu_screen);
+            }
+        });
+
+        endGameDialog.play_again_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                endGameDialog.dismiss_dialog();
+                Intent play_again_btn = new Intent(context, PlayScreen.class);
+                context.startActivity(play_again_btn);
+            }
+        });
     }
 
     private void reduce_sleep_timer(int score){

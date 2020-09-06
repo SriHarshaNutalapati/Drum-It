@@ -15,7 +15,11 @@ import android.widget.Toast;
 
 import com.elevenstudio.bopittwistitpullit.R;
 import com.elevenstudio.bopittwistitpullit.gamemodes.GameModeFactory;
+import com.elevenstudio.bopittwistitpullit.gamemodes.SurvivalMode;
+import com.elevenstudio.bopittwistitpullit.utility.EndGameDialog;
 import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
+import com.elevenstudio.bopittwistitpullit.utility.PauseGameDialog;
+import com.elevenstudio.bopittwistitpullit.utility.SettingsDialog;
 import com.elevenstudio.bopittwistitpullit.utility.sound_manager;
 
 import java.util.Locale;
@@ -25,10 +29,12 @@ public class PlayScreen extends AppCompatActivity {
 
     private int score_recorder = 0;
     private int total_time_played = 0; // in ms
+    private Boolean game_paused = false;
     private int eng_selected_view_change_timer;
     private TextView eng_selected_view, score_view;
     private Boolean game_started = false;
     private Boolean game_ended = false;
+    private Boolean pause_dialog_open = false;
     private Boolean high_score_animation_displayed = false;
     private final String[] eng_selected_view_options = {"kick it", "snare it", "crash it"};
     private String eng_selected_text = "";
@@ -91,9 +97,6 @@ public class PlayScreen extends AppCompatActivity {
 
         // Loading sounds
         setup_sounds();
-
-        // Start the game
-        start_game();
     }
 
     private void setup_tts() {
@@ -108,11 +111,26 @@ public class PlayScreen extends AppCompatActivity {
     }
     
     public void onPause(){
-        if(eng_selected_text_speech !=null){
-            eng_selected_text_speech.stop();
-            eng_selected_text_speech.shutdown();
-        }
+        if(!pause_dialog_open) pause_game();
         super.onPause();
+    }
+
+    public void onResume(){
+        if(!pause_dialog_open) resume_game();
+        super.onResume();
+    }
+
+    private void resume_game(){
+        start_game();
+        if(game_paused && score_recorder != 0) selected_mode_obj.getGame_mode().resumeTimer();
+        game_paused = false;
+    }
+
+    private void pause_game(){
+        game_paused = true;
+        btn_tap_status = "ga";
+        update_eng_selected_view_thread.interrupt();
+        selected_mode_obj.getGame_mode().stopTimer();
     }
 
     private void start_game(){
@@ -128,7 +146,7 @@ public class PlayScreen extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Log.i("showLogs", "Entered run()");
-                                if(!end_game()){
+                                if(!end_game("Too slow")){
                                     update_eng_selected_view();
                                     if(score_recorder == 0) selected_mode_obj.getGame_mode().startTimer();
                                     game_started = true;
@@ -143,12 +161,13 @@ public class PlayScreen extends AppCompatActivity {
         update_eng_selected_view_thread.start();
     }
 
-    private Boolean end_game(){
+    private Boolean end_game(String msg){
         if(btn_tap_status.equals("ed") || btn_tap_status.equals("nr")) {
             set_eng_selected_view("game over");
             update_eng_selected_view_thread.interrupt();
             selected_mode_obj.getGame_mode().stopTimer();
             selected_mode_obj.getGame_mode().update_stats_in_prefs(score_recorder);
+            selected_mode_obj.getGame_mode().displayEndGameDialog(msg, score_recorder);
             game_ended = true;
             return true;
         }
@@ -168,7 +187,7 @@ public class PlayScreen extends AppCompatActivity {
 
     public void kick_it_tapped(View view){
         btn_tap_status = eng_selected_text.equals("kick it")? "ga" : "ed";
-        if (!game_ended) {
+        if (!end_game("Wrong drum")) {
             mSoundManager.playSound(1, sound_setting);
             set_score();
         }
@@ -176,7 +195,7 @@ public class PlayScreen extends AppCompatActivity {
 
     public void snare_it_tapped(View view){
         btn_tap_status = eng_selected_text.equals("snare it")? "ga" : "ed";
-        if (!game_ended) {
+        if (!end_game("Wrong drum")) {
             mSoundManager.playSound(2, sound_setting);
             set_score();
         }
@@ -184,10 +203,23 @@ public class PlayScreen extends AppCompatActivity {
 
     public void crash_it_tapped(View view){
         btn_tap_status = eng_selected_text.equals("crash it")? "ga" : "ed";
-        if (!game_ended) {
+        if (!end_game("Wrong drum")) {
             mSoundManager.playSound(3, sound_setting);
             set_score();
         }
+    }
+
+    public void pause_tapped(View view){
+        pause_game();
+        final PauseGameDialog pause_popup = new PauseGameDialog(PlayScreen.this);
+        pause_popup.show_dialog();
+        pause_dialog_open = true;
+        pause_popup.resume_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                resume_game();
+                pause_popup.dismiss_dialog();
+            }
+        });
     }
 
 
