@@ -142,16 +142,20 @@ public class PlayScreen extends AppCompatActivity {
     }
     
     public void onPause(){
-        if(!pause_dialog_open) pause_game();
         super.onPause();
+        if(!pause_dialog_open && !game_ended) pause_game();
     }
 
     public void onResume(){
+        super.onResume();
         if(!pause_dialog_open && !start_game_dialog_open) resume_game();
         getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
                     SYSTEM_UI_FLAG_FULLSCREEN | SYSTEM_UI_FLAG_HIDE_NAVIGATION   |
                     SYSTEM_UI_FLAG_LAYOUT_STABLE | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        super.onResume();
+    }
+
+    public void onStop(){
+        super.onStop();
     }
 
     private void resume_game(){
@@ -165,6 +169,23 @@ public class PlayScreen extends AppCompatActivity {
         btn_tap_status = "ga";
         update_eng_selected_view_thread.interrupt();
         selected_mode_obj.getGame_mode().stopTimer();
+        final PauseGameDialog pause_popup = new PauseGameDialog(PlayScreen.this);
+        pause_popup.show_dialog();
+        pause_dialog_open = true;
+        pause_popup.resume_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                resume_game();
+                pause_popup.dismiss_dialog();
+                pause_dialog_open = false;
+            }
+        });
+        pause_popup.exit_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                pause_popup.dismiss_dialog();
+                end_play_screen();
+                pause_dialog_open = false;
+            }
+        });
     }
 
     private void start_game(){
@@ -245,21 +266,6 @@ public class PlayScreen extends AppCompatActivity {
 
     public void pause_tapped(View view){
         pause_game();
-        final PauseGameDialog pause_popup = new PauseGameDialog(PlayScreen.this);
-        pause_popup.show_dialog();
-        pause_dialog_open = true;
-        pause_popup.resume_btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                resume_game();
-                pause_popup.dismiss_dialog();
-            }
-        });
-        pause_popup.exit_btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                pause_popup.dismiss_dialog();
-                end_play_screen();
-            }
-        });
     }
 
 
