@@ -40,6 +40,7 @@ public class PlayScreen extends AppCompatActivity {
     private int score_recorder = 0;
     private int total_time_played = 0; // in ms
     private Boolean game_paused = false;
+    private Boolean btn_tapped_in_cycle = false;
     private int eng_selected_view_change_timer;
     private TextView eng_selected_view;
     private Boolean game_started = false;
@@ -236,6 +237,7 @@ public class PlayScreen extends AppCompatActivity {
             set_speech(option_text);
             eng_selected_text = option_text;
             btn_tap_status = "nr";
+            btn_tapped_in_cycle = false;
             eng_selected_view_change_timer = selected_mode_obj.getGame_mode().get_delay_time(score_recorder);
         }
     }
@@ -244,7 +246,8 @@ public class PlayScreen extends AppCompatActivity {
         btn_tap_status = eng_selected_text.equals("kick it")? "ga" : "ed";
         if (!end_game("Wrong drum")) {
             mSoundManager.playSound(1, sound_setting);
-            set_score();
+            if(!btn_tapped_in_cycle) set_score();
+            btn_tapped_in_cycle = true;
         }
     }
 
@@ -252,7 +255,8 @@ public class PlayScreen extends AppCompatActivity {
         btn_tap_status = eng_selected_text.equals("snare it")? "ga" : "ed";
         if (!end_game("Wrong drum")) {
             mSoundManager.playSound(2, sound_setting);
-            set_score();
+            if(!btn_tapped_in_cycle) set_score();
+            btn_tapped_in_cycle = true;
         }
     }
 
@@ -260,7 +264,8 @@ public class PlayScreen extends AppCompatActivity {
         btn_tap_status = eng_selected_text.equals("crash it")? "ga" : "ed";
         if (!end_game("Wrong drum")) {
             mSoundManager.playSound(3, sound_setting);
-            set_score();
+            if(!btn_tapped_in_cycle) set_score();
+            btn_tapped_in_cycle = true;
         }
     }
 
