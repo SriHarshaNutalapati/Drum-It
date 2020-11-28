@@ -1,5 +1,6 @@
 package com.elevenstudio.bopittwistitpullit.gamemodes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -14,13 +15,13 @@ public class GameModeFactory {
 
     private GameMode game_mode;
 
-    public GameModeFactory(Context context, String selected_mode, Chronometer chronometer_timer_view, TextView count_down_timer_view, GameSettings game_settings) {
+    public GameModeFactory(Activity context, String selected_mode, GameSettings game_settings) {
         if(selected_mode.equals(context.getResources().getString(R.string.classic_mode))){
-            game_mode = new ClassicMode(context, chronometer_timer_view, game_settings);
+            game_mode = new ClassicMode(context, game_settings);
         }else if(selected_mode.equals(context.getResources().getString(R.string.survival_mode))){
-            game_mode = new SurvivalMode(context, count_down_timer_view);
+            game_mode = new SurvivalMode(context);
         }else if(selected_mode.equals(context.getResources().getString(R.string.hi_lo_mode))){
-            game_mode = new HiLoMode(context, chronometer_timer_view, game_settings);
+            game_mode = new HiLoMode(context, game_settings);
         }
     }
 

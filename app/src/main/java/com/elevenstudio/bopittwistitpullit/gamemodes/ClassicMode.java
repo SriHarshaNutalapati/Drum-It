@@ -1,19 +1,21 @@
 package com.elevenstudio.bopittwistitpullit.gamemodes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elevenstudio.bopittwistitpullit.R;
 import com.elevenstudio.bopittwistitpullit.activities.MainMenu;
 import com.elevenstudio.bopittwistitpullit.activities.PlayScreen;
-import com.elevenstudio.bopittwistitpullit.activities.StatsScreen;
 import com.elevenstudio.bopittwistitpullit.utility.EndGameDialog;
 import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
+import com.muddzdev.styleabletoast.StyleableToast;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -23,14 +25,15 @@ public class ClassicMode extends GameMode{
     // preferences (Classic mode stats)
     private SharedPreferences classic_mode_prefs;
 
-    private Chronometer timer_view;
+    public Chronometer timer_view;
+    private TextView score_view;
     private int mTimeWhenStopped = 0;
 
-    private int eng_selected_view_change_timer = 1500;
+    private int eng_selected_view_change_timer = 1300;
     private final int MINIMUM_TIME_INTERVAL = 700; // milliseconds
     private int elapsedMilliSecSinceStart;
 
-    private Context context;
+    private Activity context;
 
     public void setTime_interval_gap_score_count() {
         time_interval_gap_score_count += 1;
@@ -38,16 +41,16 @@ public class ClassicMode extends GameMode{
 
     private int time_interval_gap_score_count = -1;
 
-    public ClassicMode(Context current, Chronometer chronometer_timer_view, GameSettings game_settings_obj){
+    public ClassicMode(Activity current, GameSettings game_settings_obj){
         game_settings = game_settings_obj;
         context = current;
         classic_mode_prefs = context.getSharedPreferences(context.getResources().getString(R.string.classic_mode_stats), MODE_PRIVATE);
-        this.timer_view = chronometer_timer_view;
-        if(game_settings.getShow_timer()) {
-            timer_view.setVisibility(View.VISIBLE);
-        } else {
-            timer_view.setVisibility(View.GONE);
-        }
+        this.timer_view = current.findViewById(R.id.timer_view);
+        this.score_view = current.findViewById(R.id.score_view);
+//        if(game_settings.getShow_timer()) {
+//            timer_view.setVisibility(View.VISIBLE);
+//        } else {
+//        }
     }
 
     public static SharedPreferences get_class_mode_prefs(Context context){
@@ -72,14 +75,16 @@ public class ClassicMode extends GameMode{
     public void displayEndGameDialog(String msg, int score) {
         final EndGameDialog endGameDialog = new EndGameDialog(context);
         endGameDialog.show_dialog(msg);
-        String extra_msg = "";
-        if(classic_mode_prefs.getInt(context.getResources().getString(R.string.classic_high_score), 0) == score) extra_msg = "(High score)";
-        endGameDialog.score_View.setText("Score: " + score + " " + extra_msg);
+        endGameDialog.score_View.setText("Score: " + score);
+        if(classic_mode_prefs.getInt(context.getResources().getString(R.string.classic_high_score), 0) > score){
+            StyleableToast.makeText(context, "High Score!", Toast.LENGTH_LONG, R.style.achievement_style).show();
+        }
         endGameDialog.main_menu_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 endGameDialog.dismiss_dialog();
                 Intent main_menu_screen = new Intent(context, MainMenu.class);
                 context.startActivity(main_menu_screen);
+                context.finish();
             }
         });
 
@@ -88,40 +93,39 @@ public class ClassicMode extends GameMode{
                 endGameDialog.dismiss_dialog();
                 Intent play_again_btn = new Intent(context, PlayScreen.class);
                 context.startActivity(play_again_btn);
+                context.finish();
             }
         });
+        endGameDialog.setCancelable(false);
+        endGameDialog.setCanceledOnTouchOutside(false);
     }
 
-    private void reduce_sleep_timer(){
-        Log.i("showLogs", "Entered reduce_sleep_timer()");
-        if(eng_selected_view_change_timer >= MINIMUM_TIME_INTERVAL){
-            eng_selected_view_change_timer = get_reduction_value();
-            if(eng_selected_view_change_timer < MINIMUM_TIME_INTERVAL){
-                eng_selected_view_change_timer = MINIMUM_TIME_INTERVAL;
-            }
-        }
-        Log.i("showLogs", "Leaving reduce_sleep_timer()");
+    private int reduce_sleep_timer(){
+        return get_reduction_value();
     }
 
     private int get_reduction_value(){
-        if(eng_selected_view_change_timer <= 800 && time_interval_gap_score_count == 3){
-            time_interval_gap_score_count = 0;
-            return eng_selected_view_change_timer - 10;
-        }else if(time_interval_gap_score_count >= (int)eng_selected_view_change_timer/100){
-            int computed_difference = eng_selected_view_change_timer - (int)eng_selected_view_change_timer/10;
-            time_interval_gap_score_count = 0;
-            return Math.max(computed_difference, 800);
+        if(eng_selected_view_change_timer > 1100){
+            eng_selected_view_change_timer = eng_selected_view_change_timer - 15;
+        }else if(eng_selected_view_change_timer <= 1100 && eng_selected_view_change_timer > 1000){
+            eng_selected_view_change_timer = eng_selected_view_change_timer - 10;
+        }else if(eng_selected_view_change_timer <= 1000 && eng_selected_view_change_timer > 700){
+            eng_selected_view_change_timer = eng_selected_view_change_timer - 8;
+        }else if(eng_selected_view_change_timer <= 700){
+            eng_selected_view_change_timer = eng_selected_view_change_timer - 5;
+        }else if(eng_selected_view_change_timer <= 600){
+            eng_selected_view_change_timer = 600;
         }
         return eng_selected_view_change_timer;
     }
 
     public int get_delay_time(int score){
         this.reduce_sleep_timer();
-        return getEng_selected_view_change_timer();
+        return eng_selected_view_change_timer;
     }
 
-    public int getEng_selected_view_change_timer() {
-        return eng_selected_view_change_timer;
+    public void reset_timer(){
+        timer_view.setBase(SystemClock.elapsedRealtime());
     }
 
     public int get_high_score(){
@@ -142,5 +146,28 @@ public class ClassicMode extends GameMode{
         classic_mode_prefs.edit().putInt(context.getResources().getString(R.string.classic_games_played), games_played + 1).apply();
         if(score > high_score) classic_mode_prefs.edit().putInt(context.getResources().getString(R.string.classic_high_score), score).apply();
         if(elapsedMilliSecSinceStart > best_time) classic_mode_prefs.edit().putInt(context.getResources().getString(R.string.classic_best_time), elapsedMilliSecSinceStart).apply();
+    }
+
+    public void setScoreView(int score){
+        this.score_view.setText("Score: " + score);
+        if(score == 10){
+            StyleableToast.makeText(context, "You're Good!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }else if(score == 25){
+            StyleableToast.makeText(context, "Way to go!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }else if(score == 40){
+            StyleableToast.makeText(context, "Superb game play!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }else if(score == 50){
+            StyleableToast.makeText(context, "Awesome!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }else if(score == 57){
+            StyleableToast.makeText(context, "Marvellous!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }else if(score == 75){
+            StyleableToast.makeText(context, "Out of box playing!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }else if(score == 100){
+            StyleableToast.makeText(context, "Sensational!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }else if(score == 125){
+            StyleableToast.makeText(context, "You're Great!!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }else if(score == 200){
+            StyleableToast.makeText(context, "You're No.1", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }
     }
 }

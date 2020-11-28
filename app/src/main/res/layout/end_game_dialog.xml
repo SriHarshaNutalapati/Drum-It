@@ -3,32 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20sp">
+    android:padding="20sp"
+    android:background="@drawable/custom_popup_bg">
 
     <Button
         android:id="@+id/end_game_main_menu"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
         android:text="Return"
-        app:layout_constraintEnd_toStartOf="@+id/end_game_play_again"
+        android:textColor="@color/white"
+        android:background="@drawable/close_btn_bg"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/end_game_score" />
 
     <Button
         android:id="@+id/end_game_play_again"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
+        android:textColor="@color/white"
         android:text="Play again"
+        android:background="@drawable/play_btn_bg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/end_game_main_menu"
-        app:layout_constraintTop_toBottomOf="@+id/end_game_score" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/end_game_main_menu" />
 
     <TextView
         android:id="@+id/end_game_main_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,6 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
+        android:textColor="#F0E995"
+        android:text="Survived: 00:00"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/end_game_main_head" />

@@ -2,11 +2,13 @@ package com.elevenstudio.bopittwistitpullit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -18,65 +20,64 @@ import com.elevenstudio.bopittwistitpullit.gamemodes.SurvivalMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class StatsScreen extends AppCompatActivity {
-    private Spinner mode_spinner;
-    private ArrayList<String> gameModes = new ArrayList<>();
-    private String selected_mode;
+import static android.view.View.SYSTEM_UI_FLAG_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
 
-    HashMap<String, View> mode_layout_map = new HashMap<>();
+public class StatsScreen extends AppCompatActivity {
+    Button classic_mode, survival_mode, hi_lo_mode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_screen);
-        setup_variables();
+        classic_mode = findViewById(R.id.classic_select);
+        survival_mode = findViewById(R.id.survival_select);
+        hi_lo_mode = findViewById(R.id.hi_lo_select);
         setup_views();
-        setup_spinner();
+//        setup_buttons();
+        classic_mode_click(classic_mode);
     }
 
-    private void setup_spinner() {
-        //Getting the instance of Spinner and applying OnItemSelectedListener on it
-        mode_spinner = findViewById(R.id.mode_select_spinner);
-        mode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                selected_mode = gameModes.get(position);
-                mode_spinner.setSelection(position);
-                setup_views();
-                mode_layout_map.get(selected_mode).setVisibility(View.VISIBLE);
-                if(selected_mode.equals(getResources().getString(R.string.classic_mode_ui))) add_classic_mode_stats();
-                if(selected_mode.equals(getResources().getString(R.string.survival_mode_ui))) add_survival_mode_stats();
-                if(selected_mode.equals(getResources().getString(R.string.hi_lo_mode_ui))) add_hi_lo_mode_stats();
-            }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+                SYSTEM_UI_FLAG_FULLSCREEN | SYSTEM_UI_FLAG_HIDE_NAVIGATION   |
+                SYSTEM_UI_FLAG_LAYOUT_STABLE | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+    public void classic_mode_click(View view){
+        setup_views();
+        add_classic_mode_stats();
+        classic_mode.setBackgroundResource(R.drawable.stats_btn_on);
+        findViewById(R.id.classic_mode_layout).setVisibility(View.VISIBLE);
+    }
 
-            }
-        });
-        //Creating the ArrayAdapter instance having the bank name list
-        ArrayAdapter mode_selector = new ArrayAdapter(this,android.R.layout.simple_spinner_item,gameModes);
-        mode_selector.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        mode_spinner.setAdapter(mode_selector);
-        // Preselect classic mode
-        mode_spinner.setSelection(0);
+    public void survival_mode_click(View view){
+        setup_views();
+        add_survival_mode_stats();
+        survival_mode.setBackgroundResource(R.drawable.stats_btn_on);
+        findViewById(R.id.survival_mode_layout).setVisibility(View.VISIBLE);
+    }
+
+    public void hi_lo_mode_click(View view){
+        setup_views();
+        add_hi_lo_mode_stats();
+        hi_lo_mode.setBackgroundResource(R.drawable.stats_btn_on);
+        findViewById(R.id.hi_lo_mode_layout).setVisibility(View.VISIBLE);
     }
 
     private void setup_views() {
         findViewById(R.id.classic_mode_layout).setVisibility(View.GONE);
         findViewById(R.id.survival_mode_layout).setVisibility(View.GONE);
         findViewById(R.id.hi_lo_mode_layout).setVisibility(View.GONE);
-    }
 
-    private void setup_variables() {
-        selected_mode = getResources().getString(R.string.classic_mode_ui);
-        gameModes.add(getResources().getString(R.string.classic_mode_ui));
-        gameModes.add(getResources().getString(R.string.survival_mode_ui));
-        gameModes.add(getResources().getString(R.string.hi_lo_mode_ui));
-
-        mode_layout_map.put(getResources().getString(R.string.classic_mode_ui), findViewById(R.id.classic_mode_layout));
-        mode_layout_map.put(getResources().getString(R.string.survival_mode_ui), findViewById(R.id.survival_mode_layout));
-        mode_layout_map.put(getResources().getString(R.string.hi_lo_mode_ui), findViewById(R.id.hi_lo_mode_layout));
+        classic_mode.setBackgroundResource(R.drawable.stats_btn_off);
+        survival_mode.setBackgroundResource(R.drawable.stats_btn_off);
+        hi_lo_mode.setBackgroundResource(R.drawable.stats_btn_off);
     }
 
     private String convert_to_time_format(int millisecs){
@@ -132,5 +133,12 @@ public class StatsScreen extends AppCompatActivity {
 
         TextView avg_score_view = findViewById(R.id.hi_lo_avg_score_value);
         avg_score_view.setText(String.valueOf(shrd_prefs.getInt(getResources().getString(R.string.hi_lo_avg_score), 0)));
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent main_menu_screen = new Intent(StatsScreen.this, MainMenu.class);
+        startActivity(main_menu_screen);
+        this.finish();
     }
 }

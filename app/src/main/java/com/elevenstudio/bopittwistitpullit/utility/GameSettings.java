@@ -5,12 +5,21 @@ import android.content.SharedPreferences;
 
 import com.elevenstudio.bopittwistitpullit.R;
 
+import java.util.HashMap;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class GameSettings {
 
     private SharedPreferences game_settings_prefs;
     private Context context;
+    public static HashMap<Integer, String> speed_to_name_map = new HashMap<Integer, String>() {{
+        put(650, "Very Fast");
+        put(850, "Fast");
+        put(1000, "Normal");
+        put(1150, "Slow");
+        put(1300, "Very Slow");
+    }};
 
     public GameSettings(Context current) {
         context = current;
@@ -19,7 +28,8 @@ public class GameSettings {
 
     /*Getters*/
     public Boolean getShow_timer() {
-        return game_settings_prefs.getBoolean(context.getResources().getString(R.string.show_timer_setting), true);
+        return true;
+//        return game_settings_prefs.getBoolean(context.getResources().getString(R.string.show_timer_setting), true);
     }
 
     public Boolean getMusic() {

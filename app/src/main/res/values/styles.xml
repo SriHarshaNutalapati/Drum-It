@@ -8,6 +8,9 @@
     </style>
 
     <style name="AppTheme" parent= "AppBaseTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
         <item name="android:textViewStyle">@style/AudioWireTextView</item>
         <item name="android:buttonStyle">@style/AudioWireButton</item>
     </style>
@@ -18,8 +21,24 @@
         <item name="android:fontFamily">@font/audiowide</item>
     </style>
 
-    <style name="LayoutStyle" parent="@android:style/Widget">
+    <style name="MainMenuStyle" parent="@android:style/Widget">
         <item name="android:background">@color/layout_bg_color</item>
+    </style>
+
+    <style name="RadioStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#08C3FA</item>
+        <item name="colorControlActivated">#2FFFF3</item>
+    </style>
+
+    <style name="achievement_style">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#52C378</item>
+        <item name="stFont">@font/audiowide</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">@color/trans_parent</item>
+        <item name="stSolidBackground">false</item>
+        <item name="stLength">SHORT</item>
+        <item name="stGravity">top</item>
     </style>
 
 </resources>

@@ -13,6 +13,13 @@ import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
 import com.elevenstudio.bopittwistitpullit.utility.ModeSelectorDialog;
 import com.elevenstudio.bopittwistitpullit.utility.SettingsDialog;
 
+import static android.view.View.SYSTEM_UI_FLAG_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+
 public class MainMenu extends AppCompatActivity {
 
     private GameSettings game_settings;
@@ -25,14 +32,24 @@ public class MainMenu extends AppCompatActivity {
         checkFirstRun();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+                SYSTEM_UI_FLAG_FULLSCREEN | SYSTEM_UI_FLAG_HIDE_NAVIGATION   |
+                SYSTEM_UI_FLAG_LAYOUT_STABLE | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
     public void startPlay(View view){
         Intent play_screen = new Intent(MainMenu.this, PlayScreen.class);
         startActivity(play_screen);
+        this.finish();
     }
 
     public void startStats(View view){
         Intent stats_screen = new Intent(MainMenu.this, StatsScreen.class);
         startActivity(stats_screen);
+        this.finish();
     }
 
     public void show_settings_dialog(View view){
@@ -53,6 +70,11 @@ public class MainMenu extends AppCompatActivity {
                 mode_dialog.dismiss_dialog();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
     }
 
     private void checkFirstRun() {

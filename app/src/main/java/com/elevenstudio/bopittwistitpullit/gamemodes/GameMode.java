@@ -1,7 +1,8 @@
 package com.elevenstudio.bopittwistitpullit.gamemodes;
 
-public class GameMode {
+import android.widget.Chronometer;
 
+public class GameMode {
     public void startTimer() {
     }
 
@@ -24,5 +25,8 @@ public class GameMode {
     public void displayEndGameDialog(String msg, int score) {
     }
 
+    public void setScoreView(int score){}
     public void resumeTimer(){}
+
+    public void reset_timer(){}
 }

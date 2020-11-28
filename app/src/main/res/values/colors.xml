@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#661d26</color>
-    <color name="colorPrimaryDark">#661d26</color>
+    <color name="colorPrimary">#12304B</color>
+    <color name="colorPrimaryDark">#12304B</color>
     <color name="colorAccent">#03DAC5</color>
 
     <!-- Colors added by developers -->
@@ -19,7 +19,7 @@
     <color name="snare_gradient_start_color">#ffda44</color>
     <color name="snare_gradient_end_color">#957856</color>
 
-    <color name="layout_bg_color">#661d26</color>
+    <color name="layout_bg_color">#f7f7f7</color>
 
     <color name="trans_parent">#00FFFFFF</color>
 </resources>

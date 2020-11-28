@@ -5,26 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MainMenu"
-    style="@style/LayoutStyle">
+    android:background="@drawable/carbon_bg">
 
     <ImageView
         android:id="@+id/game_logo_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:elevation="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/game_logo" />
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
+        app:srcCompat="@drawable/game_text" />
 
     <Button
         android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:background="@drawable/play_btn_bg"
         android:fontFamily="@font/audiowide"
         android:onClick="startPlay"
         android:text="Play"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:elevation="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mode_selector_btn"/>
+
+    <Button
+        android:id="@+id/mode_selector_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mode"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:elevation="25dp"
+        android:background="@drawable/mode_btn_bg"
+        android:onClick="show_mode_dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,32 +52,27 @@
         android:id="@+id/stats_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:background="@drawable/stats_btn_bg"
+        android:elevation="25dp"
         android:onClick="startStats"
         android:text="Stats"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mode_selector_btn" />
+        app:layout_constraintTop_toBottomOf="@id/mode_selector_btn" />
 
     <Button
         android:id="@+id/settings_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:text="Settings"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:elevation="25dp"
+        android:background="@drawable/settings_btn_bg"
         android:onClick="show_settings_dialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stats_button" />
-
-    <Button
-        android:id="@+id/mode_selector_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Mode"
-        android:onClick="show_mode_dialog"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

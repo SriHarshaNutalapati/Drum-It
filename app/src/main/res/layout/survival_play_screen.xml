@@ -11,7 +11,6 @@
         android:id="@+id/kick_it"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:visibility="gone"
         android:layout_marginBottom="15dp"
         android:background="@drawable/kick_drum_bg"
         android:onClick="kick_it_tapped"
@@ -23,7 +22,6 @@
         android:id="@+id/snare_it"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:visibility="gone"
         android:layout_marginBottom="15dp"
         android:background="@drawable/snare_drum_bg"
         android:onClick="snare_it_tapped"
@@ -35,7 +33,6 @@
         android:id="@+id/crash_it"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:visibility="gone"
         android:layout_marginBottom="15dp"
         android:background="@drawable/crash_cymbal_bg"
         android:onClick="crash_it_tapped"
@@ -50,25 +47,10 @@
         android:layout_marginTop="100dp"
         android:textColor="@color/white"
         android:textAlignment="center"
-        android:visibility="gone"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Chronometer
-        android:id="@+id/timer_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="#CFAA01"
-        android:textSize="30sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/score_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:fontFamily="@font/audiowide"
-        app:layout_constraintTop_toBottomOf="@+id/eng_selected_view" />
 
     <TextView
         android:id="@+id/count_down_timer_view"
@@ -77,26 +59,24 @@
         android:textAlignment="center"
         android:textColor="#CFAA01"
         android:textSize="30sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/score_view"
+        app:layout_constraintBottom_toTopOf="@+id/current_speed_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:fontFamily="@font/audiowide"
         app:layout_constraintTop_toBottomOf="@+id/eng_selected_view" />
 
     <TextView
-        android:id="@+id/score_view"
-        android:layout_width="wrap_content"
+        android:id="@+id/current_speed_text"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Score: 0"
-        android:textColor="#F0E995"
-        android:textSize="30sp"
-        android:visibility="gone"
+        android:layout_marginBottom="68dp"
+        android:textColor="@color/white"
         android:textAlignment="center"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/snare_it"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer_view" />
+        app:layout_constraintTop_toBottomOf="@+id/count_down_timer_view"/>
 
     <TextView
         android:id="@+id/bass_drum_text_view"
@@ -105,7 +85,6 @@
         android:layout_marginBottom="68dp"
         android:text="@string/kick_it"
         android:textColor="@color/white"
-        android:visibility="gone"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/snare_drum_text_view"
@@ -118,7 +97,6 @@
         android:layout_marginBottom="70dp"
         android:text="@string/snare_it"
         android:textColor="@color/white"
-        android:visibility="gone"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,7 +109,6 @@
         android:layout_marginBottom="70dp"
         android:text="@string/crash_it"
         android:textColor="@color/white"
-        android:visibility="gone"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +121,6 @@
         android:background="@drawable/pause_game_vector"
         android:layout_marginTop="20sp"
         android:layout_marginRight="20sp"
-        android:visibility="gone"
         android:onClick="pause_tapped"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

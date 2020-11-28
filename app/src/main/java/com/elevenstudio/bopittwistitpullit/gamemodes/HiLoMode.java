@@ -1,5 +1,6 @@
 package com.elevenstudio.bopittwistitpullit.gamemodes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,17 +43,15 @@ public class HiLoMode extends GameMode{
         time_interval_gap_score_count += 1;
     }
 
-    public HiLoMode(Context current, Chronometer chronometer_timer_view, GameSettings game_settings_obj){
+    public HiLoMode(Activity current, GameSettings game_settings_obj){
         game_settings = game_settings_obj;
-        this.timer_view = chronometer_timer_view;
-        timer_view.setVisibility(View.VISIBLE);
+        this.timer_view = current.findViewById(R.id.timer_view);;
         context = current;
         hi_lo_mode_prefs = context.getSharedPreferences(context.getResources().getString(R.string.hi_lo_mode_stats), MODE_PRIVATE);
-        if(game_settings.getShow_timer()) {
-            timer_view.setVisibility(View.VISIBLE);
-        } else {
-            timer_view.setVisibility(View.GONE);
-        }
+//        if(game_settings.getShow_timer()) {
+//            timer_view.setVisibility(View.VISIBLE);
+//        } else {
+//        }
     }
 
     public static SharedPreferences get_hi_lo_mode_prefs(Context context){
@@ -105,6 +104,8 @@ public class HiLoMode extends GameMode{
                 context.startActivity(play_again_btn);
             }
         });
+        endGameDialog.setCancelable(false);
+        endGameDialog.setCanceledOnTouchOutside(false);
     }
 
     private void reduce_sleep_timer(int score){

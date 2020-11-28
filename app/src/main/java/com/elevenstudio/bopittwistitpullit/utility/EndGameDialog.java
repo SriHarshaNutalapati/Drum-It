@@ -45,6 +45,8 @@ public class EndGameDialog extends AlertDialog {
         alert_builder.setView(layout_view);
         dialog = alert_builder.create();
         main_head_view.setText(message);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

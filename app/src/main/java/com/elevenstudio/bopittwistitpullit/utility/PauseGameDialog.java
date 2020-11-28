@@ -15,12 +15,14 @@ public class PauseGameDialog extends AlertDialog {
 
     // Views
     public Button resume_btn;
+    public Button exit_btn;
 
     public PauseGameDialog(Context context) {
         super(context);
         alert_builder = new AlertDialog.Builder(context);
         layout_view = getLayoutInflater().inflate(R.layout.pause_game_dialog, null);
         resume_btn = layout_view.findViewById(R.id.resume_btn);
+        exit_btn = layout_view.findViewById(R.id.exit_btn);
     }
 
     public void show_dialog() {
@@ -29,6 +31,8 @@ public class PauseGameDialog extends AlertDialog {
         }
         alert_builder.setView(layout_view);
         dialog = alert_builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

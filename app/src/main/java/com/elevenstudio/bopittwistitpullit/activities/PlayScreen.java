@@ -3,6 +3,7 @@ package com.elevenstudio.bopittwistitpullit.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -18,12 +19,21 @@ import com.elevenstudio.bopittwistitpullit.gamemodes.GameModeFactory;
 import com.elevenstudio.bopittwistitpullit.gamemodes.SurvivalMode;
 import com.elevenstudio.bopittwistitpullit.utility.EndGameDialog;
 import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
+import com.elevenstudio.bopittwistitpullit.utility.GameStartDialog;
 import com.elevenstudio.bopittwistitpullit.utility.PauseGameDialog;
 import com.elevenstudio.bopittwistitpullit.utility.SettingsDialog;
 import com.elevenstudio.bopittwistitpullit.utility.sound_manager;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
+
+import static android.view.View.SYSTEM_UI_FLAG_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
 
 public class PlayScreen extends AppCompatActivity {
 
@@ -31,10 +41,11 @@ public class PlayScreen extends AppCompatActivity {
     private int total_time_played = 0; // in ms
     private Boolean game_paused = false;
     private int eng_selected_view_change_timer;
-    private TextView eng_selected_view, score_view;
+    private TextView eng_selected_view;
     private Boolean game_started = false;
     private Boolean game_ended = false;
     private Boolean pause_dialog_open = false;
+    private Boolean start_game_dialog_open = true;
     private Boolean high_score_animation_displayed = false;
     private final String[] eng_selected_view_options = {"kick it", "snare it", "crash it"};
     private String eng_selected_text = "";
@@ -74,19 +85,11 @@ public class PlayScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.play_screen);
 
-        eng_selected_view = findViewById(R.id.eng_selected_view); // Engine selected option
-        score_view = findViewById(R.id.score_view); // User score view
-
         // create user data object
         game_settings = new GameSettings(PlayScreen.this);
-        selected_mode = game_settings.getSelected_mode();
+        open_start_game_dialog();
         sound_setting = game_settings.getSound();
         show_timer = game_settings.getShow_timer();
-
-
-        // Create Game Mode Object
-        selected_mode_obj = new GameModeFactory(PlayScreen.this, selected_mode, (Chronometer) findViewById(R.id.timer_view), (TextView) findViewById(R.id.count_down_timer_view), game_settings);
-        eng_selected_view_change_timer = selected_mode_obj.getGame_mode().get_delay_time(score_recorder);
 
         // setup text-to-speech
         setup_tts();
@@ -97,6 +100,34 @@ public class PlayScreen extends AppCompatActivity {
 
         // Loading sounds
         setup_sounds();
+
+    }
+
+    private void open_start_game_dialog(){
+        final GameStartDialog start_game_popup = new GameStartDialog(PlayScreen.this, game_settings);
+        start_game_popup.show_dialog();
+        start_game_popup.start_play_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                start_game_popup.dismiss_dialog();
+                setup_selected_mode();
+                start_game();
+            }
+        });
+    }
+
+    private void setup_selected_mode(){
+        selected_mode = game_settings.getSelected_mode();
+        if(selected_mode.equals(getResources().getString(R.string.classic_mode))){
+            setContentView(R.layout.classic_play_screen);
+        }else if(selected_mode.equals(getResources().getString(R.string.survival_mode))){
+            setContentView(R.layout.survival_play_screen);
+        }
+        // setting views
+        eng_selected_view = findViewById(R.id.eng_selected_view); // Engine selected option
+        // Create Game Mode Object
+        selected_mode_obj = new GameModeFactory(PlayScreen.this, selected_mode, game_settings);
+        eng_selected_view_change_timer = selected_mode_obj.getGame_mode().get_delay_time(score_recorder);
+        selected_mode_obj.getGame_mode().reset_timer();
     }
 
     private void setup_tts() {
@@ -116,7 +147,10 @@ public class PlayScreen extends AppCompatActivity {
     }
 
     public void onResume(){
-        if(!pause_dialog_open) resume_game();
+        if(!pause_dialog_open && !start_game_dialog_open) resume_game();
+        getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+                    SYSTEM_UI_FLAG_FULLSCREEN | SYSTEM_UI_FLAG_HIDE_NAVIGATION   |
+                    SYSTEM_UI_FLAG_LAYOUT_STABLE | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         super.onResume();
     }
 
@@ -220,6 +254,12 @@ public class PlayScreen extends AppCompatActivity {
                 pause_popup.dismiss_dialog();
             }
         });
+        pause_popup.exit_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                pause_popup.dismiss_dialog();
+                end_play_screen();
+            }
+        });
     }
 
 
@@ -227,11 +267,11 @@ public class PlayScreen extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void set_score(){
         score_recorder = score_recorder + 1;
-        score_view.setText("Score: " + score_recorder);
-        if(score_recorder > selected_mode_obj.getGame_mode().get_high_score() && !high_score_animation_displayed) {
-            Toast.makeText(PlayScreen.this, "New High Score!!!!!", Toast.LENGTH_LONG).show();  // Remove This
-            high_score_animation_displayed = true;
-        }
+        selected_mode_obj.getGame_mode().setScoreView(score_recorder);
+//        if(score_recorder > selected_mode_obj.getGame_mode().get_high_score() && !high_score_animation_displayed) {
+//            Toast.makeText(PlayScreen.this, "New High Score!!!!!", Toast.LENGTH_LONG).show();  // Remove This
+//            high_score_animation_displayed = true;
+//        }
         selected_mode_obj.getGame_mode().setTime_interval_gap_score_count();
     }
 
@@ -255,5 +295,18 @@ public class PlayScreen extends AppCompatActivity {
         mSoundManager.addSound(1, R.raw.kick_drum_sound);
         mSoundManager.addSound(2, R.raw.snare_drum_sound);
         mSoundManager.addSound(3, R.raw.crash_it_sound);
+    }
+
+    @Override
+    public void onBackPressed() {
+        end_play_screen();
+    }
+
+    private void end_play_screen(){
+        btn_tap_status = "ed";
+        end_game("");
+        Intent main_menu_screen = new Intent(PlayScreen.this, MainMenu.class);
+        startActivity(main_menu_screen);
+        this.finish();
     }
 }

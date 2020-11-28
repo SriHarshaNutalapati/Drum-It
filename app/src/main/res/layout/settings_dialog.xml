@@ -7,13 +7,15 @@
     android:layout_gravity="center_vertical"
     android:layout_weight="6"
     android:paddingBottom="30dp"
-    android:paddingTop="30dp">
+    android:paddingTop="30dp"
+    android:background="@drawable/custom_popup_bg">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:weightSum="6"
+        android:visibility="gone"
         android:id="@+id/show_timer_layout"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
@@ -28,7 +30,9 @@
             android:layout_weight="6"
             android:paddingEnd="50dp"
             android:paddingStart="50dp"
-            android:text="Show Timer" />
+            android:textColor="@color/white"
+            android:text="Show Timer"
+            android:track="@drawable/switch_track_custom"/>
 
     </LinearLayout>
 
@@ -75,7 +79,9 @@
             android:fontFamily="@font/audiowide"
             android:paddingEnd="50dp"
             android:paddingStart="50dp"
-            android:text="Sound" />
+            android:textColor="@color/white"
+            android:text="Sound"
+            android:track="@drawable/switch_track_custom"/>
 
     </LinearLayout>
 
@@ -99,6 +105,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="Close"
+        android:textColor="@color/white"
+        android:background="@drawable/close_btn_bg"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toBottomOf="@+id/sound_layout" />

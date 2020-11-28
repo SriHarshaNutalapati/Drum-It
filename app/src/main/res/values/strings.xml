@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kick it, Snare it, Crash it</string>
+    <string name="app_name">Drum it</string>
     <string name="kick_it">Kick it</string>
     <string name="snare_it">Snare it</string>
     <string name="crash_it">Crash it</string>
@@ -50,14 +50,19 @@
     <string name="hi_lo_mode_ui">Hi-Lo</string>
 
     <!-- Stats screen -->
-    <string name="games_played">Games played</string>
-    <string name="high_score">High score</string>
-    <string name="best_time">Best time</string>
-    <string name="avg_time">Average time</string>
-    <string name="avg_score">Average score</string>
-    <string name="total_time">Total time</string>
+    <string name="games_played">Games played: </string>
+    <string name="high_score">High score: </string>
+    <string name="best_time">Best time: </string>
+    <string name="avg_time">Average time: </string>
+    <string name="avg_score">Average score: </string>
+    <string name="total_time">Total time: </string>
 
-    <string name="best_survival">Best survival</string>
-    <string name="avg_survival">Average survival</string>
+    <string name="best_survival">Best survival: </string>
+    <string name="avg_survival">Average survival: </string>
+
+    <!-- Game Start Dialog -->
+    <string name="first_rule_text">1. Tap the corresponding buttons as they appear on the screen.</string>
+    <string name="classic_mode_second_rule_text">Speed of the game increases as you score higher.</string>
+    <string name="survival_mode_second_rule_text">Survive the game for the given time.</string>
 
 </resources>
