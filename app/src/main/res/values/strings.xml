@@ -16,6 +16,7 @@
     <string name="show_timer_setting">show_timer_setting</string>
     <string name="version_code">version_code</string>
     <string name="selected_mode_setting">selected_mode_setting</string>
+    <string name="show_tutorial_setting">show_tutorial_setting</string>
 
     <!-- Stats (stored in user preferences) keys -->
     <!-- Classic mode stats -->
@@ -61,8 +62,8 @@
     <string name="avg_survival">Average survival: </string>
 
     <!-- Game Start Dialog -->
-    <string name="first_rule_text">1. Tap the corresponding buttons as they appear on the screen.</string>
-    <string name="classic_mode_second_rule_text">Speed of the game increases as you score higher.</string>
-    <string name="survival_mode_second_rule_text">Survive the game for the given time.</string>
+    <string name="first_rule_text">Tap the corresponding images as their text appears on the screen.</string>
+    <string name="classic_mode_second_rule_text">Play as long as you want. The more you score, the difficult it becomes. Try to get a score of 100.</string>
+    <string name="survival_mode_second_rule_text">Try to survive for the given amount of time.</string>
 
 </resources>

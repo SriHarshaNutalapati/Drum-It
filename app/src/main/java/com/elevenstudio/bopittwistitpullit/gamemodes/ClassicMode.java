@@ -29,7 +29,7 @@ public class ClassicMode extends GameMode{
     private TextView score_view;
     private int mTimeWhenStopped = 0;
 
-    private int eng_selected_view_change_timer = 1300;
+    private int eng_selected_view_change_timer = 2000;
     private final int MINIMUM_TIME_INTERVAL = 700; // milliseconds
     private int elapsedMilliSecSinceStart;
 
@@ -55,6 +55,11 @@ public class ClassicMode extends GameMode{
 
     public static SharedPreferences get_class_mode_prefs(Context context){
         return context.getSharedPreferences(context.getResources().getString(R.string.classic_mode_stats), MODE_PRIVATE);
+    }
+
+    public void setup_views_before_start(){
+        context.findViewById(R.id.score_view).setVisibility(View.VISIBLE);
+        context.findViewById(R.id.timer_view).setVisibility(View.VISIBLE);
     }
 
     public void startTimer(){
@@ -106,7 +111,7 @@ public class ClassicMode extends GameMode{
 
     private int get_reduction_value(){
         if(eng_selected_view_change_timer > 1100){
-            eng_selected_view_change_timer = eng_selected_view_change_timer - 15;
+            eng_selected_view_change_timer = eng_selected_view_change_timer - 25;
         }else if(eng_selected_view_change_timer <= 1100 && eng_selected_view_change_timer > 1000){
             eng_selected_view_change_timer = eng_selected_view_change_timer - 10;
         }else if(eng_selected_view_change_timer <= 1000 && eng_selected_view_change_timer > 700){

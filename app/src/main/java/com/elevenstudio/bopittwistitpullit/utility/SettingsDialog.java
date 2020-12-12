@@ -53,7 +53,7 @@ public class SettingsDialog extends AlertDialog {
             }
         });
 
-        sound_switch.setChecked(game_settings.getMusic());
+        sound_switch.setChecked(game_settings.getSound());
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 

@@ -52,6 +52,10 @@ public class SurvivalMode extends GameMode{
         return context.getSharedPreferences(context.getResources().getString(R.string.survival_mode_stats), MODE_PRIVATE);
     }
 
+    public void setup_views_before_start(){
+        context.findViewById(R.id.count_down_timer_view).setVisibility(View.VISIBLE);
+    }
+
     public void startTimer(){
         count_down_timer.start();
     }
@@ -124,13 +128,37 @@ public class SurvivalMode extends GameMode{
         if(time_interval_gap_score_count >= gap_size_assignee){
             gap_size_assignee = new Random().nextInt(5 - 2) + 2; // gives a random number between 4 and 2
             time_interval_gap_score_count = 0;
-            eng_selected_view_change_timer = get_reduction_value();
+            int function_execution_number = getRandomElement(new int[]{1,2,3});
+            if(function_execution_number == 1){
+                eng_selected_view_change_timer = get_reduction_value_classic();
+            }else{
+                eng_selected_view_change_timer = get_reduction_value_hi_lo();
+            }
         }
-        Log.i("time_log", "Gap assignee: " + gap_size_assignee);
-        Log.i("time_log", "time_interval_gap_score_count: " + time_interval_gap_score_count);
+//        Log.i("time_log", "Gap assignee: " + gap_size_assignee);
+//        Log.i("time_log", "time_interval_gap_score_count: " + time_interval_gap_score_count);
     }
 
-    private int get_reduction_value(){
+    private int get_reduction_value_classic(){
+        if(time_remaning > 20000){
+            // Not even 10 sec have passed since game start. So select a values between medium, slow and very slow ranges.
+            eng_selected_view_change_timer = 1150;
+        }else if(time_remaning <= 20000 && time_remaning > 10000){
+            // More than 10 sec have passed since game start. So select a values between very fast, fast, medium and slow ranges.
+            eng_selected_view_change_timer = 900;
+        }else if(time_remaning <= 10000){
+            // More than 20 sec have passed since game start. So select a values between very fast, fast, medium and slow ranges.
+            eng_selected_view_change_timer = 750;
+        }
+        if(time_remaning < 23000 && time_remaning > 20000){
+            StyleableToast.makeText(context, "Superb! Speed up warning!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }else if(time_remaning < 13000 && time_remaning > 10000){
+            StyleableToast.makeText(context, "Awesome! Speed up warning!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }
+        return eng_selected_view_change_timer;
+    }
+
+    private int get_reduction_value_hi_lo(){
         if(time_remaning > 20000){
             // Not even 10 sec have passed since game start. So select a values between medium, slow and very slow ranges.
             eng_selected_view_change_timer = getRandomElement(new int[]{1000, 1000 ,1150, 1150, 1150, 1150, 1300, 1300, 1300, 1300});
@@ -140,7 +168,7 @@ public class SurvivalMode extends GameMode{
             eng_selected_view_change_timer = getRandomElement(new int[]{650, 650, 850, 850, 850, 1000, 1000, 1000, 1150, 1150});
         }else if(time_remaning <= 10000){
             // More than 20 sec have passed since game start. So select a values between very fast, fast, medium and slow ranges.
-            eng_selected_view_change_timer = getRandomElement(new int[]{650, 650, 650, 650, 850, 850, 850, 850, 1000, 1000});
+            eng_selected_view_change_timer = getRandomElement(new int[]{650, 650, 650, 650, 650, 650, 850, 850, 850, 850});
         }
         if(time_remaning < 23000 && time_remaning > 20000){
             StyleableToast.makeText(context, "Superb! Speed up warning!", Toast.LENGTH_SHORT, R.style.achievement_style).show();

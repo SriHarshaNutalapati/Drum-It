@@ -85,6 +85,17 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/sound_layout_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(Only applies to button sounds)"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/sound_layout"/>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_guideline"
         android:layout_width="wrap_content"
@@ -109,5 +120,5 @@
         android:background="@drawable/close_btn_bg"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/sound_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/sound_layout_condition" />
 </androidx.constraintlayout.widget.ConstraintLayout>

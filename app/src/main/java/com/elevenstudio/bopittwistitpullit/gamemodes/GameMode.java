@@ -29,4 +29,7 @@ public class GameMode {
     public void resumeTimer(){}
 
     public void reset_timer(){}
+
+    public void setup_views_before_start() {
+    }
 }

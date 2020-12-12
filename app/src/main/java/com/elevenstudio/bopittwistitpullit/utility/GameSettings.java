@@ -40,6 +40,10 @@ public class GameSettings {
         return game_settings_prefs.getBoolean(context.getResources().getString(R.string.sound_setting), true);
     }
 
+    public Boolean getShowTutorial() {
+        return game_settings_prefs.getBoolean(context.getResources().getString(R.string.show_tutorial_setting), true);
+    }
+
     public String getSelected_mode() {
         return game_settings_prefs.getString(context.getResources().getString(R.string.selected_mode_setting), context.getResources().getString(R.string.classic_mode));
     }
@@ -67,6 +71,10 @@ public class GameSettings {
 
     public void updateVersionCode(int version){
         game_settings_prefs.edit().putInt(context.getResources().getString(R.string.version_code), version).apply();
+    }
+
+    public void updateShowTutorialSetting(Boolean status){
+        game_settings_prefs.edit().putBoolean(context.getResources().getString(R.string.show_tutorial_setting), status).apply();
     }
 
 

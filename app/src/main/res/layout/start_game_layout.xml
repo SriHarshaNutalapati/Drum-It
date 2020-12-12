@@ -97,7 +97,7 @@
         android:layout_marginTop="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/second_rule_view" />
+        app:layout_constraintTop_toBottomOf="@id/first_rule_view" />
 
 <!--    <ImageView-->
 <!--        android:id="@+id/rule_image_view"-->
@@ -113,19 +113,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10sp"
-        android:textAlignment="center"
         android:textColor="@color/white"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_mode_radio_group" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/first_rule_view"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/first_rule_text"-->
-<!--        android:textColor="@color/white"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+    <TextView
+        android:id="@+id/how_to_play_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How to play?"
+        android:textSize="20sp"
+        android:layout_marginTop="15sp"
+        android:textColor="#CFAA01"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/second_rule_view"/>
+
+    <TextView
+        android:id="@+id/first_rule_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/first_rule_text"
+        android:textAlignment="center"
+        android:textColor="#CFAA01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/how_to_play_head"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
