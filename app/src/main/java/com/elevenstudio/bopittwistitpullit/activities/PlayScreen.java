@@ -273,11 +273,13 @@ public class PlayScreen extends AppCompatActivity {
             }
             return;
         }
-        btn_tap_status = eng_selected_text.equals("kick it")? "ga" : "ed";
-        if (!end_game("Wrong drum")) {
-            mSoundManager.playSound(1, sound_setting);
-            if(!btn_tapped_in_cycle) set_score();
-            btn_tapped_in_cycle = true;
+        if(!btn_tapped_in_cycle) {
+            btn_tap_status = eng_selected_text.equals("kick it") ? "ga" : "ed";
+            if (!end_game("Wrong drum")) {
+                mSoundManager.playSound(1, sound_setting);
+                set_score();
+                btn_tapped_in_cycle = true;
+            }
         }
     }
 
@@ -290,11 +292,13 @@ public class PlayScreen extends AppCompatActivity {
             }
             return;
         }
-        btn_tap_status = eng_selected_text.equals("snare it")? "ga" : "ed";
-        if (!end_game("Wrong drum")) {
-            mSoundManager.playSound(2, sound_setting);
-            if(!btn_tapped_in_cycle) set_score();
-            btn_tapped_in_cycle = true;
+        if(!btn_tapped_in_cycle){
+            btn_tap_status = eng_selected_text.equals("snare it")? "ga" : "ed";
+            if (!end_game("Wrong drum")) {
+                mSoundManager.playSound(2, sound_setting);
+                set_score();
+                btn_tapped_in_cycle = true;
+            }
         }
     }
 
@@ -308,11 +312,13 @@ public class PlayScreen extends AppCompatActivity {
             }
             return;
         }
-        btn_tap_status = eng_selected_text.equals("crash it")? "ga" : "ed";
-        if (!end_game("Wrong drum")) {
-            mSoundManager.playSound(3, sound_setting);
-            if(!btn_tapped_in_cycle) set_score();
-            btn_tapped_in_cycle = true;
+        if(!btn_tapped_in_cycle) {
+            btn_tap_status = eng_selected_text.equals("crash it") ? "ga" : "ed";
+            if (!end_game("Wrong drum")) {
+                mSoundManager.playSound(3, sound_setting);
+                set_score();
+                btn_tapped_in_cycle = true;
+            }
         }
     }
 
