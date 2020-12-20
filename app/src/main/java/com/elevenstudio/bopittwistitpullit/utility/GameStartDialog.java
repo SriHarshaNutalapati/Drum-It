@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class GameStartDialog extends AlertDialog {
     // Views
     private RadioButton classic_radio, survival_radio, hi_lo_radio;
     private RadioGroup mode_radio_group;
+    private CheckBox show_tutorial_cb;
 
     // Game settings
     private GameSettings game_settings;
@@ -52,6 +54,7 @@ public class GameStartDialog extends AlertDialog {
 
         start_play_btn = layout_view.findViewById(R.id.start_play_btn);
         second_rule_view = layout_view.findViewById(R.id.second_rule_view);
+        show_tutorial_cb = layout_view.findViewById(R.id.tutorial_checkbox);
 
         mode_radio_group.check(mode_view_map.get(game_settings.getSelected_mode()));
         selected_mode = game_settings.getSelected_mode();
@@ -64,6 +67,14 @@ public class GameStartDialog extends AlertDialog {
             }
         });
         set_selected_mode_text(context, selected_mode);
+
+        show_tutorial_cb.setChecked(game_settings.getShowTutorial());
+        show_tutorial_cb.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                game_settings.updateShowTutorialSetting(show_tutorial_cb.isChecked());
+            }
+        });
 
     }
 

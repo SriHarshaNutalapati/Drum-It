@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -32,13 +32,25 @@
 
     <style name="achievement_style">
         <item name="stTextBold">true</item>
-        <item name="stTextColor">#52C378</item>
+        <item name="stTextColor">#E1FB1C1C</item>
         <item name="stFont">@font/audiowide</item>
         <item name="stTextSize">14sp</item>
         <item name="stColorBackground">@color/trans_parent</item>
         <item name="stSolidBackground">false</item>
         <item name="stLength">SHORT</item>
         <item name="stGravity">top</item>
+    </style>
+
+    <style name="tutorial_checkbox_theme" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:colorControlNormal" tools:targetApi="lollipop">#08C3FA</item>
+        <item name="android:colorControlActivated" tools:targetApi="lollipop">#2FFFF3</item>
+        <item name="android:colorControlHighlight" tools:targetApi="lollipop">#2FFFF3</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
+    </style>
+
+    <style name="TutorialCheckbox">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/audiowide</item>
     </style>
 
 </resources>

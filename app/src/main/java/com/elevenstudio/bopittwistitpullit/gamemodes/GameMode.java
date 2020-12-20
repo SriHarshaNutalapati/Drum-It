@@ -1,7 +1,5 @@
 package com.elevenstudio.bopittwistitpullit.gamemodes;
 
-import android.widget.Chronometer;
-
 public class GameMode {
     public void startTimer() {
     }
@@ -31,5 +29,14 @@ public class GameMode {
     public void reset_timer(){}
 
     public void setup_views_before_start() {
+    }
+
+    public void set_life_view(int lifes_remaining){ }
+
+    public int get_lifes_remaining() {
+        return 1;
+    }
+
+    public void slow_down_timer() {
     }
 }

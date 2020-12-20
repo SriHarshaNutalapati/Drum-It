@@ -22,6 +22,7 @@ import java.util.Random;
 import static android.content.Context.MODE_PRIVATE;
 
 public class SurvivalMode extends GameMode{
+    private final int MAX_LIFES = 1;
     private SharedPreferences survival_mode_prefs;
     private Boolean time_up = false;
 
@@ -170,11 +171,11 @@ public class SurvivalMode extends GameMode{
             // More than 20 sec have passed since game start. So select a values between very fast, fast, medium and slow ranges.
             eng_selected_view_change_timer = getRandomElement(new int[]{650, 650, 650, 650, 650, 650, 850, 850, 850, 850});
         }
-        if(time_remaning < 23000 && time_remaning > 20000){
-            StyleableToast.makeText(context, "Superb! Speed up warning!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }else if(time_remaning < 13000 && time_remaning > 10000){
-            StyleableToast.makeText(context, "Awesome! Speed up warning!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }
+//        if(time_remaning < 23000 && time_remaning > 20000){
+//            StyleableToast.makeText(context, "Superb! Speed up warning!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }else if(time_remaning < 13000 && time_remaning > 10000){
+////            StyleableToast.makeText(context, "Awesome! Speed up warning!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }
 //        Log.i("time_log", "Mode: " + String.valueOf(eng_selected_view_change_timer));
 //        Log.i("time_log", "Seconds Passed: " + count_down_timer_view.getText());
         return eng_selected_view_change_timer;
@@ -207,5 +208,9 @@ public class SurvivalMode extends GameMode{
         survival_mode_prefs.edit().putInt(context.getResources().getString(R.string.survival_avg_time), avg_time).apply();
         survival_mode_prefs.edit().putInt(context.getResources().getString(R.string.survival_games_played), games_played + 1).apply();
         if(elapsedMilliSecSinceStart > best_time) survival_mode_prefs.edit().putInt(context.getResources().getString(R.string.survival_best_time), elapsedMilliSecSinceStart).apply();
+    }
+
+    public int get_lifes_remaining() {
+        return MAX_LIFES;
     }
 }

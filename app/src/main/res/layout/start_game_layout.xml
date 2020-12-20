@@ -93,11 +93,11 @@
         android:layout_height="wrap_content"
         android:background="@drawable/play_btn_bg"
         android:text="Play"
-        android:textColor="@color/white"
+        android:textColor="#2B2B2B"
         android:layout_marginTop="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/first_rule_view" />
+        app:layout_constraintTop_toBottomOf="@id/tutorial_checkbox" />
 
 <!--    <ImageView-->
 <!--        android:id="@+id/rule_image_view"-->
@@ -142,4 +142,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/how_to_play_head"/>
+
+    <CheckBox
+        android:id="@+id/tutorial_checkbox"
+        android:text="Show tutorial"
+        android:layout_marginTop="10sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TutorialCheckbox"
+        android:theme="@style/tutorial_checkbox_theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_rule_view"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

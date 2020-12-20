@@ -6,28 +6,22 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.captaindroid.tvg.Tvg;
 import com.elevenstudio.bopittwistitpullit.R;
 import com.elevenstudio.bopittwistitpullit.gamemodes.GameModeFactory;
-import com.elevenstudio.bopittwistitpullit.gamemodes.SurvivalMode;
-import com.elevenstudio.bopittwistitpullit.utility.EndGameDialog;
 import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
 import com.elevenstudio.bopittwistitpullit.utility.GameStartDialog;
 import com.elevenstudio.bopittwistitpullit.utility.PauseGameDialog;
-import com.elevenstudio.bopittwistitpullit.utility.SettingsDialog;
 import com.elevenstudio.bopittwistitpullit.utility.sound_manager;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.muddzdev.styleabletoast.StyleableToast;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 
@@ -56,6 +50,7 @@ public class PlayScreen extends AppCompatActivity {
     private String btn_tap_status = "ga";
     private Boolean tutorial_on = false;
     private int tutorial_seq = 1;
+    private int lifes_remaining;
     /*
         "ga": (go ahead) user tapped correct button => resume game
         "ed": (end game) user tapped wrong button (or) user tapped two buttons => end game
@@ -75,13 +70,14 @@ public class PlayScreen extends AppCompatActivity {
     private String selected_mode;
     private Boolean show_timer;
     private Boolean sound_setting;
-    private Boolean show_tutorial;
 
     // TTS
     TextToSpeech eng_selected_text_speech;
 
     // mode selected
     private GameModeFactory selected_mode_obj;
+
+    int kick_it_start, kick_it_end, snare_it_start, snare_it_end, crash_it_start, crash_it_end;
 
     public PlayScreen() {
         update_eng_selected_view_thread = null;
@@ -97,7 +93,6 @@ public class PlayScreen extends AppCompatActivity {
         open_start_game_dialog();
         sound_setting = game_settings.getSound();
         show_timer = game_settings.getShow_timer();
-        show_tutorial = game_settings.getShowTutorial();
 
         // setup text-to-speech
         setup_tts();
@@ -112,6 +107,13 @@ public class PlayScreen extends AppCompatActivity {
         // Loading sounds
         setup_sounds();
 
+        kick_it_start =  getResources().getColor(R.color.bass_gradient_start_color);
+        kick_it_end = getResources().getColor(R.color.bass_gradient_end_color);
+        snare_it_start = getResources().getColor(R.color.snare_gradient_start_color);
+        snare_it_end = getResources().getColor(R.color.snare_gradient_end_color);
+        crash_it_start = getResources().getColor(R.color.cymbal_gradient_start_color);
+        crash_it_end = getResources().getColor(R.color.cymbal_gradient_end_color);
+
     }
 
     private void open_start_game_dialog(){
@@ -121,7 +123,7 @@ public class PlayScreen extends AppCompatActivity {
             public void onClick(View v) {
                 start_game_popup.dismiss_dialog();
                 setup_selected_mode();
-                if(show_tutorial){
+                if(game_settings.getShowTutorial()){
                     tutorial_on = true;
                     show_tutorial(eng_selected_view_options[0], R.id.kick_it);
                 }else{
@@ -134,6 +136,7 @@ public class PlayScreen extends AppCompatActivity {
     private void show_tutorial(String eng_selected_view_option_tutorial, int btn_id_tutorial){
         set_eng_selected_view(eng_selected_view_option_tutorial);
         set_speech(eng_selected_view_option_tutorial);
+        change_text_color(eng_selected_view_option_tutorial);
         Button btn_to_be_animated = findViewById(btn_id_tutorial);
         btn_to_be_animated.setAnimation(anim_button_shake);
     }
@@ -149,6 +152,8 @@ public class PlayScreen extends AppCompatActivity {
         eng_selected_view = findViewById(R.id.eng_selected_view); // Engine selected option
         // Create Game Mode Object
         selected_mode_obj = new GameModeFactory(PlayScreen.this, selected_mode, game_settings);
+
+        lifes_remaining = selected_mode_obj.getGame_mode().get_lifes_remaining();
     }
 
     private void setup_tts() {
@@ -223,11 +228,9 @@ public class PlayScreen extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(!end_game("Too slow")){
-                                    update_eng_selected_view();
-                                    if(score_recorder == 0) selected_mode_obj.getGame_mode().startTimer();
-                                    game_started = true;
-                                }
+                                update_eng_selected_view();
+                                if(score_recorder == 0) selected_mode_obj.getGame_mode().startTimer();
+                                game_started = true;
                             }
                         });
                         Thread.sleep(eng_selected_view_change_timer);
@@ -240,7 +243,7 @@ public class PlayScreen extends AppCompatActivity {
     }
 
     private Boolean end_game(String msg){
-        if(btn_tap_status.equals("ed") || btn_tap_status.equals("nr")) {
+        if((btn_tap_status.equals("ed") || btn_tap_status.equals("nr")) && lifes_remaining == 0) {
             set_eng_selected_view("game over");
             update_eng_selected_view_thread.interrupt();
             selected_mode_obj.getGame_mode().stopTimer();
@@ -253,14 +256,35 @@ public class PlayScreen extends AppCompatActivity {
     }
 
     private void update_eng_selected_view(){
-        if(btn_tap_status.equals("ga")){
+        if(btn_tap_status.equals("nr")){
+            lifes_remaining = lifes_remaining - 1;
+            selected_mode_obj.getGame_mode().set_life_view(lifes_remaining);
+            StyleableToast.makeText(PlayScreen.this, "Too Slow", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+            end_game("Too Slow");
+        }
+        if(btn_tap_status.equals("ga") || lifes_remaining > 0){
             String option_text = get_random_option();
             set_eng_selected_view(option_text);
             set_speech(option_text);
             eng_selected_text = option_text;
+            change_text_color(option_text);
             btn_tap_status = "nr";
             btn_tapped_in_cycle = false;
             eng_selected_view_change_timer = selected_mode_obj.getGame_mode().get_delay_time(score_recorder);
+        }
+    }
+
+    private void change_text_color(String text){
+        switch (text) {
+            case "kick it":
+                Tvg.change(eng_selected_view, kick_it_start, kick_it_end);
+                break;
+            case "snare it":
+                Tvg.change(eng_selected_view, snare_it_start, snare_it_end);
+                break;
+            case "crash it":
+                Tvg.change(eng_selected_view, crash_it_start, crash_it_end);
+                break;
         }
     }
 
@@ -273,11 +297,10 @@ public class PlayScreen extends AppCompatActivity {
             }
             return;
         }
-        btn_tap_status = eng_selected_text.equals("kick it")? "ga" : "ed";
-        if (!end_game("Wrong drum")) {
-            mSoundManager.playSound(1, sound_setting);
-            if(!btn_tapped_in_cycle) set_score();
-            btn_tapped_in_cycle = true;
+        if (eng_selected_text.equals("kick it")) {
+            right_drum_clicked(1);
+        } else if(!btn_tapped_in_cycle){
+            wrong_drum_clicked();
         }
     }
 
@@ -290,11 +313,10 @@ public class PlayScreen extends AppCompatActivity {
             }
             return;
         }
-        btn_tap_status = eng_selected_text.equals("snare it")? "ga" : "ed";
-        if (!end_game("Wrong drum")) {
-            mSoundManager.playSound(2, sound_setting);
-            if(!btn_tapped_in_cycle) set_score();
-            btn_tapped_in_cycle = true;
+        if (eng_selected_text.equals("snare it")) {
+            right_drum_clicked(2);
+        } else if(!btn_tapped_in_cycle){
+            wrong_drum_clicked();
         }
     }
 
@@ -308,12 +330,35 @@ public class PlayScreen extends AppCompatActivity {
             }
             return;
         }
-        btn_tap_status = eng_selected_text.equals("crash it")? "ga" : "ed";
-        if (!end_game("Wrong drum")) {
-            mSoundManager.playSound(3, sound_setting);
-            if(!btn_tapped_in_cycle) set_score();
-            btn_tapped_in_cycle = true;
+        if (eng_selected_text.equals("crash it")) {
+            right_drum_clicked(3);
+        } else if(!btn_tapped_in_cycle){
+            wrong_drum_clicked();
         }
+    }
+
+    public void slow_down_tapped(View view){
+        btn_tap_status = "ga";
+        selected_mode_obj.getGame_mode().slow_down_timer();
+    }
+
+    private void wrong_drum_clicked(){
+        if(lifes_remaining == 0){
+            btn_tap_status = "ed";
+        }else{
+            lifes_remaining = lifes_remaining - 1;
+            selected_mode_obj.getGame_mode().set_life_view(lifes_remaining);
+            btn_tap_status = lifes_remaining != 0?"ga":"ed";
+            StyleableToast.makeText(PlayScreen.this, "Wrong drum", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+        }
+        end_game("Wrong drum");
+    }
+
+    private void right_drum_clicked(int index){
+        mSoundManager.playSound(index, sound_setting);
+        if(!btn_tapped_in_cycle) set_score();
+        btn_tapped_in_cycle = true;
+        btn_tap_status = "ga";
     }
 
     public void pause_tapped(View view){
