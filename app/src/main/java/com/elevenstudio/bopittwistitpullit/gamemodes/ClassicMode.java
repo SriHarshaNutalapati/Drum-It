@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,9 +20,12 @@ import com.elevenstudio.bopittwistitpullit.utility.EndGameDialog;
 import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
 import com.muddzdev.styleabletoast.StyleableToast;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class ClassicMode extends GameMode{
+    private final int MAX_LIFES = 3;
     // game settings
     private GameSettings game_settings;
     // preferences (Classic mode stats)
@@ -35,6 +41,9 @@ public class ClassicMode extends GameMode{
 
     private Activity context;
 
+    private int no_life_image;
+    private ImageView third_image_view, second_image_view, first_image_view;
+
     public void setTime_interval_gap_score_count() {
         time_interval_gap_score_count += 1;
     }
@@ -47,6 +56,10 @@ public class ClassicMode extends GameMode{
         classic_mode_prefs = context.getSharedPreferences(context.getResources().getString(R.string.classic_mode_stats), MODE_PRIVATE);
         this.timer_view = current.findViewById(R.id.timer_view);
         this.score_view = current.findViewById(R.id.score_view);
+        this.third_image_view = current.findViewById(R.id.life_image_3);
+        this.second_image_view = current.findViewById(R.id.life_image_2);
+        this.first_image_view = current.findViewById(R.id.life_image_1);
+        this.no_life_image = R.drawable.no_life_image;
 //        if(game_settings.getShow_timer()) {
 //            timer_view.setVisibility(View.VISIBLE);
 //        } else {
@@ -110,16 +123,16 @@ public class ClassicMode extends GameMode{
     }
 
     private int get_reduction_value(){
-        if(eng_selected_view_change_timer > 1100){
+        if(eng_selected_view_change_timer > 1300 && eng_selected_view_change_timer <= 2000){
+            eng_selected_view_change_timer = eng_selected_view_change_timer - 75;
+        }else if(eng_selected_view_change_timer <= 1300 && eng_selected_view_change_timer > 1100){
             eng_selected_view_change_timer = eng_selected_view_change_timer - 25;
         }else if(eng_selected_view_change_timer <= 1100 && eng_selected_view_change_timer > 1000){
             eng_selected_view_change_timer = eng_selected_view_change_timer - 10;
-        }else if(eng_selected_view_change_timer <= 1000 && eng_selected_view_change_timer > 700){
-            eng_selected_view_change_timer = eng_selected_view_change_timer - 8;
-        }else if(eng_selected_view_change_timer <= 700){
+        }else if(eng_selected_view_change_timer <= 1000 && eng_selected_view_change_timer > 800){
             eng_selected_view_change_timer = eng_selected_view_change_timer - 5;
-        }else if(eng_selected_view_change_timer <= 600){
-            eng_selected_view_change_timer = 600;
+        }else if(eng_selected_view_change_timer <= 800){
+            eng_selected_view_change_timer = 800;
         }
         return eng_selected_view_change_timer;
     }
@@ -153,26 +166,46 @@ public class ClassicMode extends GameMode{
         if(elapsedMilliSecSinceStart > best_time) classic_mode_prefs.edit().putInt(context.getResources().getString(R.string.classic_best_time), elapsedMilliSecSinceStart).apply();
     }
 
+    public void slow_down_timer() {
+        eng_selected_view_change_timer = eng_selected_view_change_timer + 300;
+    }
+
     public void setScoreView(int score){
         this.score_view.setText("Score: " + score);
-        if(score == 10){
-            StyleableToast.makeText(context, "You're Good!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }else if(score == 25){
-            StyleableToast.makeText(context, "Way to go!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }else if(score == 40){
-            StyleableToast.makeText(context, "Superb game play!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }else if(score == 50){
-            StyleableToast.makeText(context, "Awesome!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }else if(score == 57){
-            StyleableToast.makeText(context, "Marvellous!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }else if(score == 75){
-            StyleableToast.makeText(context, "Out of box playing!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }else if(score == 100){
-            StyleableToast.makeText(context, "Sensational!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }else if(score == 125){
-            StyleableToast.makeText(context, "You're Great!!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
-        }else if(score == 200){
-            StyleableToast.makeText(context, "You're No.1", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        if(score == 10){
+//            StyleableToast.makeText(context, "You're Good!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }else if(score == 25){
+//            StyleableToast.makeText(context, "Way to go!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }else if(score == 40){
+//            StyleableToast.makeText(context, "Superb game play!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }else if(score == 50){
+//            StyleableToast.makeText(context, "Awesome!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }else if(score == 57){
+//            StyleableToast.makeText(context, "Marvellous!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }else if(score == 75){
+//            StyleableToast.makeText(context, "Out of box playing!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }else if(score == 100){
+//            StyleableToast.makeText(context, "Sensational!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }else if(score == 125){
+//            StyleableToast.makeText(context, "You're Great!!", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }else if(score == 200){
+//            StyleableToast.makeText(context, "You're No.1", Toast.LENGTH_SHORT, R.style.achievement_style).show();
+//        }
+    }
+
+    public int get_lifes_remaining() {
+        return MAX_LIFES;
+    }
+
+    public void set_life_view(int lifes_remaining){
+        if(lifes_remaining == 2){
+            third_image_view.setImageResource(this.no_life_image);
+            eng_selected_view_change_timer = eng_selected_view_change_timer + 50;
+        }else if(lifes_remaining == 1){
+            second_image_view.setImageResource(this.no_life_image);
+            eng_selected_view_change_timer = eng_selected_view_change_timer + 50;
+        }else{
+            first_image_view.setImageResource(this.no_life_image);
         }
     }
 }
