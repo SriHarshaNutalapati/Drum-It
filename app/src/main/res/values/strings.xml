@@ -3,6 +3,9 @@
     <string name="kick_it">Kick it</string>
     <string name="snare_it">Snare it</string>
     <string name="crash_it">Crash it</string>
+    <string name="ride_it">Ride it</string>
+    <string name="hat_it">Hat it</string>
+    <string name="tom_it">Tom it</string>
 
     <!-- Preferences names -->
     <string name="classic_mode_stats">classic_mode_stats</string>

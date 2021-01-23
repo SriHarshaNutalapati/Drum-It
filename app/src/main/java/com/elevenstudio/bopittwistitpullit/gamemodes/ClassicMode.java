@@ -35,8 +35,8 @@ public class ClassicMode extends GameMode{
     private TextView score_view;
     private int mTimeWhenStopped = 0;
 
-    private int eng_selected_view_change_timer = 2000;
-    private final int MINIMUM_TIME_INTERVAL = 700; // milliseconds
+    private int eng_selected_view_change_timer = 1500;
+    private final int MINIMUM_TIME_INTERVAL = 250; // milliseconds
     private int elapsedMilliSecSinceStart;
 
     private Activity context;
@@ -123,23 +123,24 @@ public class ClassicMode extends GameMode{
     }
 
     private int get_reduction_value(){
-        if(eng_selected_view_change_timer > 1300 && eng_selected_view_change_timer <= 2000){
-            eng_selected_view_change_timer = eng_selected_view_change_timer - 75;
-        }else if(eng_selected_view_change_timer <= 1300 && eng_selected_view_change_timer > 1100){
-            eng_selected_view_change_timer = eng_selected_view_change_timer - 25;
-        }else if(eng_selected_view_change_timer <= 1100 && eng_selected_view_change_timer > 1000){
-            eng_selected_view_change_timer = eng_selected_view_change_timer - 10;
-        }else if(eng_selected_view_change_timer <= 1000 && eng_selected_view_change_timer > 800){
-            eng_selected_view_change_timer = eng_selected_view_change_timer - 5;
-        }else if(eng_selected_view_change_timer <= 800){
-            eng_selected_view_change_timer = 800;
-        }
-        return eng_selected_view_change_timer;
+//        if(eng_selected_view_change_timer > 1300 && eng_selected_view_change_timer <= 2075){
+//            eng_selected_view_change_timer = eng_selected_view_change_timer - 75;
+//        }else if(eng_selected_view_change_timer <= 1300 && eng_selected_view_change_timer > 1100){
+//            eng_selected_view_change_timer = eng_selected_view_change_timer - 25;
+//        }else if(eng_selected_view_change_timer <= 1100 && eng_selected_view_change_timer > 1000){
+//            eng_selected_view_change_timer = eng_selected_view_change_timer - 10;
+//        }else if(eng_selected_view_change_timer <= 1000 && eng_selected_view_change_timer > 800){
+//            eng_selected_view_change_timer = eng_selected_view_change_timer - 5;
+//        }else if(eng_selected_view_change_timer <= 800){
+//            eng_selected_view_change_timer = 400;
+//        }
+        if(eng_selected_view_change_timer > MINIMUM_TIME_INTERVAL) eng_selected_view_change_timer = eng_selected_view_change_timer - 5;
+        return 250;
     }
 
     public int get_delay_time(int score){
         this.reduce_sleep_timer();
-        return eng_selected_view_change_timer;
+        return 1000;
     }
 
     public void reset_timer(){
@@ -200,10 +201,8 @@ public class ClassicMode extends GameMode{
     public void set_life_view(int lifes_remaining){
         if(lifes_remaining == 2){
             third_image_view.setImageResource(this.no_life_image);
-            eng_selected_view_change_timer = eng_selected_view_change_timer + 50;
         }else if(lifes_remaining == 1){
             second_image_view.setImageResource(this.no_life_image);
-            eng_selected_view_change_timer = eng_selected_view_change_timer + 50;
         }else{
             first_image_view.setImageResource(this.no_life_image);
         }

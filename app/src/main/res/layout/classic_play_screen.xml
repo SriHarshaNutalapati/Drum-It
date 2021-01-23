@@ -70,6 +70,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/snare_it" />
 
+    <Button
+        android:id="@+id/ride_it"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="ride_it_tapped"
+        app:layout_constraintBottom_toTopOf="@+id/ride_cymbal_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/hat_it"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/hat_it"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="hat_it_tapped"
+        app:layout_constraintBottom_toTopOf="@+id/hat_cymbal_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/tom_it"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="tom_it_tapped"
+        app:layout_constraintBottom_toTopOf="@+id/tom_drum_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/hat_it" />
+
     <TextView
         android:id="@+id/eng_selected_view"
         android:layout_width="wrap_content"
@@ -107,58 +137,39 @@
         android:textSize="30sp"
         android:textAlignment="center"
         android:layout_marginBottom="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/powerups_cont"
+        app:layout_constraintBottom_toTopOf="@+id/snare_it"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/powerups_cont"
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/power_up_progress_bar"
+        style="@style/CircularDeterminateProgressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@id/kick_it"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timer_view"
+        tools:progress="50" />
+
+    <ImageView
+        android:id="@+id/powerUpImage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/snare_it"
-        android:layout_marginTop="20sp"
-        android:layout_marginLeft="20sp">
-
-        <Button
-            android:id="@+id/slow_down_button"
-            android:layout_width="50sp"
-            android:layout_height="wrap_content"
-            android:padding="10sp"
-            android:onClick="slow_down_tapped"
-            android:layout_weight="1"
-            android:text="Slow Down"/>
-
-        <Button
-            android:id="@+id/double_multiplier_button"
-            android:layout_width="50sp"
-            android:layout_height="wrap_content"
-            android:padding="10sp"
-            android:onClick="slow_down_tapped"
-            android:layout_weight="1"
-            android:text="2x"/>
-
-        <Button
-            android:id="@+id/freeze_btn"
-            android:layout_width="50sp"
-            android:padding="10sp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Freeze"/>
-    </LinearLayout>
+        app:layout_constraintLeft_toLeftOf="@id/power_up_progress_bar"
+        app:layout_constraintTop_toTopOf="@id/power_up_progress_bar"
+        app:layout_constraintBottom_toBottomOf="@id/power_up_progress_bar"
+        app:layout_constraintRight_toRightOf="@id/power_up_progress_bar"
+        app:srcCompat="@drawable/question_mark"/>
 
     <TextView
         android:id="@+id/bass_drum_text_view"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/kick_it"
         android:textColor="@color/white"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ride_it"
         app:layout_constraintEnd_toStartOf="@+id/snare_drum_text_view"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -166,11 +177,11 @@
         android:id="@+id/snare_drum_text_view"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/snare_it"
         android:textColor="@color/white"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/hat_it"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -178,13 +189,49 @@
         android:id="@+id/crash_cymbal_text_view"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/crash_it"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/tom_it"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/snare_drum_text_view" />
+
+    <TextView
+        android:id="@+id/ride_cymbal_text_view"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/ride_it"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hat_cymbal_text_view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/hat_cymbal_text_view"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/hat_it"
         android:textColor="@color/white"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/snare_drum_text_view" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tom_drum_text_view"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/tom_it"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/hat_cymbal_text_view" />
 
     <Button
         android:id="@+id/pause_game_btn"
