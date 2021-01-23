@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.elevenstudio.bopittwistitpullit"
+        applicationId "com.elevenstudio.drumit"
         minSdkVersion 18
         targetSdkVersion 29
         versionCode 1

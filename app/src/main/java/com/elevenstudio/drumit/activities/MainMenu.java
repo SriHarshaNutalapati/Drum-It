@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit.activities;
+package com.elevenstudio.drumit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.elevenstudio.bopittwistitpullit.BuildConfig;
-import com.elevenstudio.bopittwistitpullit.R;
-import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
-import com.elevenstudio.bopittwistitpullit.utility.ModeSelectorDialog;
-import com.elevenstudio.bopittwistitpullit.utility.SettingsDialog;
+import com.elevenstudio.drumit.BuildConfig;
+import com.elevenstudio.drumit.R;
+import com.elevenstudio.drumit.utility.GameSettings;
+import com.elevenstudio.drumit.utility.ModeSelectorDialog;
+import com.elevenstudio.drumit.utility.SettingsDialog;
 
 import static android.view.View.SYSTEM_UI_FLAG_FULLSCREEN;
 import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;

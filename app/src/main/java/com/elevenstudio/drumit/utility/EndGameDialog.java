@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit.utility;
+package com.elevenstudio.drumit.utility;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.elevenstudio.bopittwistitpullit.R;
+import com.elevenstudio.drumit.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

@@ -1,26 +1,22 @@
-package com.elevenstudio.bopittwistitpullit.gamemodes;
+package com.elevenstudio.drumit.gamemodes;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elevenstudio.bopittwistitpullit.R;
-import com.elevenstudio.bopittwistitpullit.activities.MainMenu;
-import com.elevenstudio.bopittwistitpullit.activities.PlayScreen;
-import com.elevenstudio.bopittwistitpullit.utility.EndGameDialog;
-import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
+import com.elevenstudio.drumit.R;
+import com.elevenstudio.drumit.activities.MainMenu;
+import com.elevenstudio.drumit.activities.PlayScreen;
+import com.elevenstudio.drumit.utility.EndGameDialog;
+import com.elevenstudio.drumit.utility.GameSettings;
 import com.muddzdev.styleabletoast.StyleableToast;
-
-import androidx.core.content.res.ResourcesCompat;
 
 import static android.content.Context.MODE_PRIVATE;
 

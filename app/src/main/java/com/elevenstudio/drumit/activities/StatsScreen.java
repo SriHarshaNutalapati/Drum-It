@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit.activities;
+package com.elevenstudio.drumit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,19 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.elevenstudio.bopittwistitpullit.R;
-import com.elevenstudio.bopittwistitpullit.gamemodes.ClassicMode;
-import com.elevenstudio.bopittwistitpullit.gamemodes.HiLoMode;
-import com.elevenstudio.bopittwistitpullit.gamemodes.SurvivalMode;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.elevenstudio.drumit.R;
+import com.elevenstudio.drumit.gamemodes.ClassicMode;
+import com.elevenstudio.drumit.gamemodes.HiLoMode;
+import com.elevenstudio.drumit.gamemodes.SurvivalMode;
 
 import static android.view.View.SYSTEM_UI_FLAG_FULLSCREEN;
 import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;

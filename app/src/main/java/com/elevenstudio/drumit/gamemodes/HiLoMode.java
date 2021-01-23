@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit.gamemodes;
+package com.elevenstudio.drumit.gamemodes;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,11 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 
-import com.elevenstudio.bopittwistitpullit.R;
-import com.elevenstudio.bopittwistitpullit.activities.MainMenu;
-import com.elevenstudio.bopittwistitpullit.activities.PlayScreen;
-import com.elevenstudio.bopittwistitpullit.utility.EndGameDialog;
-import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
+import com.elevenstudio.drumit.R;
+import com.elevenstudio.drumit.activities.MainMenu;
+import com.elevenstudio.drumit.activities.PlayScreen;
+import com.elevenstudio.drumit.utility.EndGameDialog;
+import com.elevenstudio.drumit.utility.GameSettings;
 
 import java.util.Random;
 

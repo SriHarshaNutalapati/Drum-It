@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit.gamemodes;
+package com.elevenstudio.drumit.gamemodes;
 
 public class GameMode {
     public void startTimer() {

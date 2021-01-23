@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit.activities;
+package com.elevenstudio.drumit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,12 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.captaindroid.tvg.Tvg;
-import com.elevenstudio.bopittwistitpullit.R;
-import com.elevenstudio.bopittwistitpullit.gamemodes.GameModeFactory;
-import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
-import com.elevenstudio.bopittwistitpullit.utility.GameStartDialog;
-import com.elevenstudio.bopittwistitpullit.utility.PauseGameDialog;
-import com.elevenstudio.bopittwistitpullit.utility.sound_manager;
+import com.elevenstudio.drumit.R;
+import com.elevenstudio.drumit.gamemodes.GameModeFactory;
+import com.elevenstudio.drumit.utility.GameSettings;
+import com.elevenstudio.drumit.utility.GameStartDialog;
+import com.elevenstudio.drumit.utility.PauseGameDialog;
+import com.elevenstudio.drumit.utility.sound_manager;
 import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.util.Locale;
