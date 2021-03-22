@@ -1,20 +1,13 @@
-package com.elevenstudio.bopittwistitpullit.utility;
+package com.elevenstudio.drumit.utility;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.elevenstudio.bopittwistitpullit.R;
-
-import static android.content.Context.MODE_PRIVATE;
+import com.elevenstudio.drumit.R;
 
 public class EndGameDialog extends AlertDialog {
     private AlertDialog.Builder alert_builder;

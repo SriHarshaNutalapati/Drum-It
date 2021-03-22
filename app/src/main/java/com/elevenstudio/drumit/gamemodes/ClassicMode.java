@@ -1,26 +1,22 @@
-package com.elevenstudio.bopittwistitpullit.gamemodes;
+package com.elevenstudio.drumit.gamemodes;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elevenstudio.bopittwistitpullit.R;
-import com.elevenstudio.bopittwistitpullit.activities.MainMenu;
-import com.elevenstudio.bopittwistitpullit.activities.PlayScreen;
-import com.elevenstudio.bopittwistitpullit.utility.EndGameDialog;
-import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
+import com.elevenstudio.drumit.R;
+import com.elevenstudio.drumit.activities.MainMenu;
+import com.elevenstudio.drumit.activities.PlayScreen;
+import com.elevenstudio.drumit.utility.EndGameDialog;
+import com.elevenstudio.drumit.utility.GameSettings;
 import com.muddzdev.styleabletoast.StyleableToast;
-
-import androidx.core.content.res.ResourcesCompat;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -35,7 +31,7 @@ public class ClassicMode extends GameMode{
     private TextView score_view;
     private int mTimeWhenStopped = 0;
 
-    private int eng_selected_view_change_timer = 1500;
+    private int eng_selected_view_change_timer = 1000;
     private final int MINIMUM_TIME_INTERVAL = 250; // milliseconds
     private int elapsedMilliSecSinceStart;
 
@@ -135,12 +131,12 @@ public class ClassicMode extends GameMode{
 //            eng_selected_view_change_timer = 400;
 //        }
         if(eng_selected_view_change_timer > MINIMUM_TIME_INTERVAL) eng_selected_view_change_timer = eng_selected_view_change_timer - 5;
-        return 250;
+        return eng_selected_view_change_timer;
     }
 
     public int get_delay_time(int score){
         this.reduce_sleep_timer();
-        return 1000;
+        return 5000;
     }
 
     public void reset_timer(){

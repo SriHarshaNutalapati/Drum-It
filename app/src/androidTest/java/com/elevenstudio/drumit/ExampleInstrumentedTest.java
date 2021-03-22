@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit;
+package com.elevenstudio.drumit;
 
 import android.content.Context;
 

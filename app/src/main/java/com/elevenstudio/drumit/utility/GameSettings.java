@@ -1,9 +1,9 @@
-package com.elevenstudio.bopittwistitpullit.utility;
+package com.elevenstudio.drumit.utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.elevenstudio.bopittwistitpullit.R;
+import com.elevenstudio.drumit.R;
 
 import java.util.HashMap;
 

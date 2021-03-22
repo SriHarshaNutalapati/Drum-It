@@ -1,22 +1,16 @@
-package com.elevenstudio.bopittwistitpullit.utility;
+package com.elevenstudio.drumit.utility;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 
-import com.elevenstudio.bopittwistitpullit.R;
+import com.elevenstudio.drumit.R;
 
 import java.util.HashMap;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class ModeSelectorDialog extends AlertDialog {
     private AlertDialog.Builder alert_builder;

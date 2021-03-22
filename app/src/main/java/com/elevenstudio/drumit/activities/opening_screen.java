@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit.activities;
+package com.elevenstudio.drumit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.elevenstudio.bopittwistitpullit.R;
+import com.elevenstudio.drumit.R;
 
 import static android.view.View.SYSTEM_UI_FLAG_FULLSCREEN;
 import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;

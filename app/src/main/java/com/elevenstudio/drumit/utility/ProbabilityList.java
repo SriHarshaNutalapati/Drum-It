@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit.utility;
+package com.elevenstudio.drumit.utility;
 
 import java.util.NavigableMap;
 import java.util.Random;

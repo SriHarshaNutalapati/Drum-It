@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -104,14 +105,14 @@
         android:id="@+id/eng_selected_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:textColor="@color/white"
         android:textAlignment="center"
-        android:text="fsdfioj"
+        android:layout_marginTop="20sp"
+        android:text="snare it"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/pause_game_btn" />
 
     <Chronometer
         android:id="@+id/timer_view"
@@ -125,21 +126,21 @@
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         android:fontFamily="@font/audiowide"
-        app:layout_constraintTop_toBottomOf="@+id/lifes_images_cont" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/score_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Beats: 0"
+        android:text="00000"
         android:visibility="visible"
         android:textColor="#F0E995"
-        android:textSize="30sp"
+        android:textSize="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="20sp"
         android:textAlignment="center"
-        android:layout_marginBottom="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/snare_it"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ProgressBar
         android:id="@+id/power_up_progress_bar"
@@ -149,7 +150,24 @@
         app:layout_constraintBottom_toTopOf="@id/kick_it"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timer_view"
+        app:layout_constraintVertical_bias="0.498"
         tools:progress="50" />
+
+    <ProgressBar
+        android:id="@+id/healthBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:progressTint="@color/white"
+        android:secondaryProgressTint="@color/colorAccent"
+        android:progress="100"
+        android:paddingLeft="20sp"
+        android:paddingRight="20sp"
+        android:indeterminate="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/snare_it"/>
 
     <ImageView
         android:id="@+id/powerUpImage"
@@ -159,7 +177,7 @@
         app:layout_constraintTop_toTopOf="@id/power_up_progress_bar"
         app:layout_constraintBottom_toBottomOf="@id/power_up_progress_bar"
         app:layout_constraintRight_toRightOf="@id/power_up_progress_bar"
-        app:srcCompat="@drawable/question_mark"/>
+        app:srcCompat="@drawable/powerup_anim"/>
 
     <TextView
         android:id="@+id/bass_drum_text_view"
@@ -239,8 +257,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/pause_game_vector"
         android:layout_marginTop="20sp"
-        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp"
         android:onClick="pause_tapped"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timer_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

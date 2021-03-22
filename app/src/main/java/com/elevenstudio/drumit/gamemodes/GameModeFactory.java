@@ -1,12 +1,9 @@
-package com.elevenstudio.bopittwistitpullit.gamemodes;
+package com.elevenstudio.drumit.gamemodes;
 
 import android.app.Activity;
-import android.content.Context;
-import android.widget.Chronometer;
-import android.widget.TextView;
 
-import com.elevenstudio.bopittwistitpullit.R;
-import com.elevenstudio.bopittwistitpullit.utility.GameSettings;
+import com.elevenstudio.drumit.R;
+import com.elevenstudio.drumit.utility.GameSettings;
 
 public class GameModeFactory {
     public GameMode getGame_mode() {

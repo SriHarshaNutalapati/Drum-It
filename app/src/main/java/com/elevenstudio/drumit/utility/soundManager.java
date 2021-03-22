@@ -1,4 +1,4 @@
-package com.elevenstudio.bopittwistitpullit.utility;
+package com.elevenstudio.drumit.utility;
 
 import java.util.HashMap;
 
@@ -8,7 +8,7 @@ import android.media.SoundPool;
 
 
 
-public class sound_manager {
+public class soundManager {
 
     private  SoundPool mSoundPool;
     private  HashMap<Integer, Integer> mSoundPoolMap;
@@ -16,7 +16,7 @@ public class sound_manager {
     private  Context mContext;
     public static final int maxSounds = 1;
 
-    public sound_manager()
+    public soundManager()
     {
 
     }
