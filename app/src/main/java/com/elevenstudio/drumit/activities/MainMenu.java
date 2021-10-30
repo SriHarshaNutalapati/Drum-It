@@ -29,7 +29,7 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         game_settings = new GameSettings(MainMenu.this);
-        checkFirstRun();
+//        checkFirstRun();
     }
 
     @Override
@@ -77,31 +77,31 @@ public class MainMenu extends AppCompatActivity {
         this.finish();
     }
 
-    private void checkFirstRun() {
-        // Get current version code
-        int currentVersionCode = BuildConfig.VERSION_CODE;
-
-        // Get saved version code
-        int savedVersionCode = game_settings.getCurrentVersion();
-
-        // Check for first run or upgrade
-        if (savedVersionCode == -1) {
-            // This is a new install (or the user cleared the shared preferences)
-            Toast.makeText(MainMenu.this, "This is first time", Toast.LENGTH_LONG).show();  // Remove This
-        } else if (currentVersionCode >= savedVersionCode) {
-            // This is just a normal run
-            // No effect even if there is an upgrade as of now
-            return;
-        }
-        /*
-            else if (currentVersionCode > savedVersionCode) {
-                //  Runs when user upgrades app.
-                //  Not required as of now
-            }
-
-        */
-
-        // Update the shared preferences with the current version code
-        game_settings.updateVersionCode(currentVersionCode);
-    }
+//    private void checkFirstRun() {
+//        // Get current version code
+//        int currentVersionCode = BuildConfig.VERSION_CODE;
+//
+//        // Get saved version code
+//        int savedVersionCode = game_settings.getCurrentVersion();
+//
+//        // Check for first run or upgrade
+//        if (savedVersionCode == -1) {
+//            // This is a new install (or the user cleared the shared preferences)
+//            Toast.makeText(MainMenu.this, "This is first time", Toast.LENGTH_LONG).show();  // Remove This
+//        } else if (currentVersionCode >= savedVersionCode) {
+//            // This is just a normal run
+//            // No effect even if there is an upgrade as of now
+//            return;
+//        }
+//        /*
+//            else if (currentVersionCode > savedVersionCode) {
+//                //  Runs when user upgrades app.
+//                //  Not required as of now
+//            }
+//
+//        */
+//
+//        // Update the shared preferences with the current version code
+//        game_settings.updateVersionCode(currentVersionCode);
+//    }
 }

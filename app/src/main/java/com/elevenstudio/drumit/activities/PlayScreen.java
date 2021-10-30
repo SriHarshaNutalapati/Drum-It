@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.captaindroid.tvg.Tvg;
+import com.elevenstudio.drumit.BuildConfig;
 import com.elevenstudio.drumit.R;
 import com.elevenstudio.drumit.gamemodes.GameModeFactory;
 import com.elevenstudio.drumit.handlers.UserWaitingHandlerThread;
@@ -24,6 +26,7 @@ import com.elevenstudio.drumit.utility.GameSettings;
 import com.elevenstudio.drumit.utility.PauseGameDialog;
 import com.elevenstudio.drumit.utility.ProbabilityList;
 import com.elevenstudio.drumit.utility.soundManager;
+import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -102,7 +105,6 @@ public class PlayScreen extends AppCompatActivity {
         // create user data object
         mGameSettings = new GameSettings(PlayScreen.this);
 //        open_start_game_dialog();
-        setup_selected_mode();
         mSoundSetting = mGameSettings.getSound();
 
         // Animation for the text
@@ -112,11 +114,6 @@ public class PlayScreen extends AppCompatActivity {
         mAnimButtonShake = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.shake_anim);
 
-        // Loading sounds
-        setup_sounds();
-
-        setup_tts();
-
         kick_it_start = getResources().getColor(R.color.bass_gradient_start_color);
         kick_it_end = getResources().getColor(R.color.bass_gradient_end_color);
         snare_it_start = getResources().getColor(R.color.snare_gradient_start_color);
@@ -124,15 +121,7 @@ public class PlayScreen extends AppCompatActivity {
         crash_it_start = getResources().getColor(R.color.cymbal_gradient_start_color);
         crash_it_end = getResources().getColor(R.color.cymbal_gradient_end_color);
 
-        mDrumSelectorHandler = new UserWaitingHandlerThread(PlayScreen.this);
-        mDrumSelectorHandler.start();
-        mPowerUpHandler = new UserWaitingHandlerThread(PlayScreen.this);
-        mPowerUpHandler.start();
-        mFansProgressHandler = new UserWaitingHandlerThread(PlayScreen.this);
-        mFansProgressHandler.start();
-
-        start_game();
-
+        checkFirstRun();
     }
 
     private void show_tutorial(String eng_selected_view_option_tutorial, int btn_id_tutorial) {
@@ -209,7 +198,7 @@ public class PlayScreen extends AppCompatActivity {
         mGameStarted = true;
 //        SystemClock.sleep(2000);
         mDrumSelectorHandler.getWaitingHandler().postDelayed(new UserOptionRunnable(), 2000);
-        mPowerUpHandler.getWaitingHandler().postDelayed(new powerUpRunnable(), 2000);
+//        mPowerUpHandler.getWaitingHandler().postDelayed(new powerUpRunnable(), 2000);
         mFansProgressHandler.getWaitingHandler().postDelayed(new gameProgressBarRunnable(), 2000);
     }
 
@@ -325,13 +314,13 @@ public class PlayScreen extends AppCompatActivity {
     }
 
     private void wrong_drum_clicked() {
-        if(mFansPercentage >= 0) mFansPercentage = mFansPercentage - 5;
+        if(mFansPercentage >= 0) mFansPercentage = mFansPercentage - 10;
         mDrumTappedInCycle = true;
     }
 
     private void right_drum_clicked(int index) {
         mSoundManager.playSound(index, mSoundSetting);
-        if(mFansPercentage <= 100 && !freeze_power_up_activated) mFansPercentage = mFansPercentage + 10;
+        if(mFansPercentage <= 100) mFansPercentage = mFansPercentage + 10; //  && !freeze_power_up_activated
         setBeats();
         mDrumTappedInCycle = true;
     }
@@ -379,7 +368,7 @@ public class PlayScreen extends AppCompatActivity {
 
         private void run_bg_process() {
             Log.i("Gameprogress", "entered run_bg_process");
-            if(!mDrumTappedInCycle && !freeze_power_up_activated) mFansPercentage = mFansPercentage - 10;
+            if(!mDrumTappedInCycle) mFansPercentage = mFansPercentage - 10; // && !freeze_power_up_activated
             option_text = get_random_option();
             speakWord(option_text);
             mSelectedDrum = option_text;
@@ -473,57 +462,57 @@ public class PlayScreen extends AppCompatActivity {
 //        }
 
         private int getTimeIntervalGap(){
-            if(mNextDrumTimer > 350) mNextDrumTimer = mNextDrumTimer - 5;
+            if(mNextDrumTimer > 300) mNextDrumTimer = mNextDrumTimer - 50;
             return mNextDrumTimer;
         }
     }
 
-    private class powerUpRunnable implements Runnable {
-        @Override
-        public void run() {
-            while (mProgressStatus < 100) {
-                SystemClock.sleep(400);
-                mProgressStatus += 1;
-                mPowerUpProgressBar.setProgress(mProgressStatus);
-            }
-            activatePowerUp();
-            mPowerUpHandler.getWaitingHandler().postAtFrontOfQueue(new powerDownRunnable());
-        }
+//    private class powerUpRunnable implements Runnable {
+//        @Override
+//        public void run() {
+//            while (mProgressStatus < 100) {
+//                SystemClock.sleep(400);
+//                mProgressStatus += 1;
+//                mPowerUpProgressBar.setProgress(mProgressStatus);
+//            }
+//            activatePowerUp();
+//            mPowerUpHandler.getWaitingHandler().postAtFrontOfQueue(new powerDownRunnable());
+//        }
+//
+//        private void activatePowerUp(){
+//            String selectedPowerUp = (String) power_ups.next();
+//            if (selectedPowerUp.equals("slowdown")){
+//                mNextDrumTimer = mNextDrumTimer + 300;
+////                mPowerUpImageView.setImageResource(R.drawable.slowdown_powerup_activated);
+//            }else if (selectedPowerUp.equals("multiplier")){
+//                mMultiplierPowerUp *= 2;
+////                mPowerUpImageView.setImageResource(R.drawable.multiplier_powerup);
+//            }else {
+//                mFansPercentage = mFansPercentage + 30;
+//                if(mFansPercentage > 100) mFansPercentage = 100;
+////                mPowerUpImageView.setImageResource(R.drawable.freeze_powerup_activated);
+//            }
+//        }
+//    }
 
-        private void activatePowerUp(){
-            String selectedPowerUp = (String) power_ups.next();
-            if (selectedPowerUp.equals("slowdown")){
-                mNextDrumTimer = mNextDrumTimer + 300;
-//                mPowerUpImageView.setImageResource(R.drawable.slowdown_powerup_activated);
-            }else if (selectedPowerUp.equals("multiplier")){
-                mMultiplierPowerUp *= 2;
-//                mPowerUpImageView.setImageResource(R.drawable.multiplier_powerup);
-            }else {
-                mFansPercentage = mFansPercentage + 30;
-                if(mFansPercentage > 100) mFansPercentage = 100;
-//                mPowerUpImageView.setImageResource(R.drawable.freeze_powerup_activated);
-            }
-        }
-    }
-
-    private class powerDownRunnable implements Runnable {
-        @Override
-        public void run() {
-            while (mProgressStatus != 0) {
-                SystemClock.sleep(200);
-                mProgressStatus -= 1;
-                mPowerUpProgressBar.setProgress(mProgressStatus);
-            }
-            deactivatePowerUp();
-            mPowerUpHandler.getWaitingHandler().postAtFrontOfQueue(new powerUpRunnable());
-        }
-
-        private void deactivatePowerUp() {
-            freeze_power_up_activated = false;
-            mMultiplierPowerUp = 1;
-//            mPowerUpImageView.setImageResource(R.drawable.question_mark);
-        }
-    }
+//    private class powerDownRunnable implements Runnable {
+//        @Override
+//        public void run() {
+//            while (mProgressStatus != 0) {
+//                SystemClock.sleep(200);
+//                mProgressStatus -= 1;
+//                mPowerUpProgressBar.setProgress(mProgressStatus);
+//            }
+//            deactivatePowerUp();
+//            mPowerUpHandler.getWaitingHandler().postAtFrontOfQueue(new powerUpRunnable());
+//        }
+//
+//        private void deactivatePowerUp() {
+//            freeze_power_up_activated = false;
+//            mMultiplierPowerUp = 1;
+////            mPowerUpImageView.setImageResource(R.drawable.question_mark);
+//        }
+//    }
 
     private class gameProgressBarRunnable implements Runnable {
         @Override
@@ -547,6 +536,51 @@ public class PlayScreen extends AppCompatActivity {
         }
     }
 
+    private void setup_game(){
+        setup_selected_mode();
+        // Loading sounds
+        setup_sounds();
+
+        setup_tts();
+
+        mDrumSelectorHandler = new UserWaitingHandlerThread(PlayScreen.this);
+        mDrumSelectorHandler.start();
+        mPowerUpHandler = new UserWaitingHandlerThread(PlayScreen.this);
+        mPowerUpHandler.start();
+        mFansProgressHandler = new UserWaitingHandlerThread(PlayScreen.this);
+        mFansProgressHandler.start();
+
+        start_game();
+    }
+
+    private void checkFirstRun() {
+        // Get current version code
+        int currentVersionCode = BuildConfig.VERSION_CODE;
+
+        // Get saved version code
+        int savedVersionCode = mGameSettings.getCurrentVersion();
+
+        // Check for first run or upgrade
+        if (savedVersionCode == -1) {
+            // This is a new install (or the user cleared the shared preferences)
+            Toast.makeText(PlayScreen.this, "This is first time", Toast.LENGTH_LONG).show();  // Remove This
+        } else if (currentVersionCode >= savedVersionCode) {
+            // This is just a normal run
+            // No effect even if there is an upgrade as of now
+            setup_game();
+            return;
+        }
+        /*
+            else if (currentVersionCode > savedVersionCode) {
+                //  Runs when user upgrades app.
+                //  Not required as of now
+            }
+
+        */
+
+        // Update the shared preferences with the current version code
+        mGameSettings.updateVersionCode(currentVersionCode);
+    }
 }
 
 //    private void open_start_game_dialog() {
