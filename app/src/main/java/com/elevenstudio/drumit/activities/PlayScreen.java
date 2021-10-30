@@ -26,7 +26,6 @@ import com.elevenstudio.drumit.utility.GameSettings;
 import com.elevenstudio.drumit.utility.PauseGameDialog;
 import com.elevenstudio.drumit.utility.ProbabilityList;
 import com.elevenstudio.drumit.utility.soundManager;
-import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -114,6 +113,8 @@ public class PlayScreen extends AppCompatActivity {
         mAnimButtonShake = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.shake_anim);
 
+        mSelectedDrumView = findViewById(R.id.eng_selected_view); // Engine selected option
+
         kick_it_start = getResources().getColor(R.color.bass_gradient_start_color);
         kick_it_end = getResources().getColor(R.color.bass_gradient_end_color);
         snare_it_start = getResources().getColor(R.color.snare_gradient_start_color);
@@ -125,8 +126,8 @@ public class PlayScreen extends AppCompatActivity {
     }
 
     private void show_tutorial(String eng_selected_view_option_tutorial, int btn_id_tutorial) {
-//        set_eng_selected_view(eng_selected_view_option_tutorial);
-//        set_speech(eng_selected_view_option_tutorial);
+        set_eng_selected_view(eng_selected_view_option_tutorial);
+        speakWord(eng_selected_view_option_tutorial);
         change_text_color(eng_selected_view_option_tutorial);
         Button btn_to_be_animated = findViewById(btn_id_tutorial);
         btn_to_be_animated.setAnimation(mAnimButtonShake);
@@ -135,7 +136,6 @@ public class PlayScreen extends AppCompatActivity {
     private void setup_selected_mode() {
         String selectedMode = mGameSettings.getSelected_mode();
         // setting views
-        mSelectedDrumView = findViewById(R.id.eng_selected_view); // Engine selected option
         mPowerUpProgressBar = findViewById(R.id.power_up_progress_bar);
         mPowerUpImageView = findViewById(R.id.powerUpImage);
         mFansPercentBar = findViewById(R.id.healthBar);
@@ -143,7 +143,6 @@ public class PlayScreen extends AppCompatActivity {
         // Create Game Mode Object
         mSelectedModeObj = new GameModeFactory(PlayScreen.this, selectedMode, mGameSettings);
     }
-
 
     public void onPause() {
         super.onPause();
@@ -163,7 +162,6 @@ public class PlayScreen extends AppCompatActivity {
     }
 
     private void resume_game() {
-//        start_game();
         if (mGamePaused && mBeatsRecorder != 0) mSelectedModeObj.getGame_mode().resumeTimer();
         mGamePaused = false;
     }
@@ -269,7 +267,7 @@ public class PlayScreen extends AppCompatActivity {
             if (mTutorialSequence == 4) {
                 view.clearAnimation();
                 mTutorialSequence = 5;
-                show_tutorial(mDrumKitList[4], R.id.tom_it);
+                show_tutorial(mDrumKitList[4], R.id.hat_it);
             }
             return;
         }
@@ -302,7 +300,7 @@ public class PlayScreen extends AppCompatActivity {
                 view.clearAnimation();
                 mTutorialSequence = 7;
                 mTutorialOn = false;
-                start_game();
+//                setup_game();
             }
             return;
         }
@@ -467,6 +465,93 @@ public class PlayScreen extends AppCompatActivity {
         }
     }
 
+    private class gameProgressBarRunnable implements Runnable {
+        @Override
+        public void run() {
+            while (mFansPercentage > 0) {
+                SystemClock.sleep(200);
+                 mFansPercentage = mFansPercentage - 1; // if(!freeze_power_up_activated)
+                mFansPercentBar.setProgress(mFansPercentage);
+            }
+//            while (mFansPercentage > 0) {
+//                SystemClock.sleep(500);
+//                if (mFansPercentage < 100) mFansPercentage = mFansPercentage + 1;
+//                mFansPercentBar.setProgress(mFansPercentage);
+//            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    end_game("progress over");
+                }
+            });
+        }
+    }
+
+    private void setup_game(){
+
+        mDrumSelectorHandler = new UserWaitingHandlerThread(PlayScreen.this);
+        mDrumSelectorHandler.start();
+        mPowerUpHandler = new UserWaitingHandlerThread(PlayScreen.this);
+        mPowerUpHandler.start();
+        mFansProgressHandler = new UserWaitingHandlerThread(PlayScreen.this);
+        mFansProgressHandler.start();
+
+        start_game();
+    }
+
+    private void checkFirstRun() {
+        // Get current version code
+        int currentVersionCode = BuildConfig.VERSION_CODE;
+
+        // Get saved version code
+        int savedVersionCode = -1; // mGameSettings.getCurrentVersion();
+
+        setup_sounds(); setup_tts(); setup_selected_mode();
+
+        // Check for first run or upgrade
+        if (savedVersionCode == -1) {
+            // This is a new install (or the user cleared the shared preferences)
+            Toast.makeText(PlayScreen.this, "This is first time", Toast.LENGTH_LONG).show();  // Remove This
+            mTutorialOn = true;
+            show_tutorial(mDrumKitList[0], R.id.kick_it);
+        } else if (currentVersionCode >= savedVersionCode) {
+//             This is just a normal run
+//             No effect even if there is an upgrade as of now
+            setup_sounds(); setup_tts(); setup_selected_mode();
+            setup_game();
+            return;
+        }
+        /*
+            else if (currentVersionCode > savedVersionCode) {
+                //  Runs when user upgrades app.
+                //  Not required as of now
+            }
+
+        */
+
+        // Update the shared preferences with the current version code
+        mGameSettings.updateVersionCode(currentVersionCode);
+    }
+}
+
+//    private void open_start_game_dialog() {
+//        final GameStartDialog start_game_popup = new GameStartDialog(PlayScreen.this, mGameSettings);
+//        start_game_popup.show_dialog();
+//        start_game_popup.start_play_btn.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                start_game_popup.dismiss_dialog();
+//                setup_selected_mode();
+//                if (mGameSettings.getShowTutorial()) {
+//                    mTutorialOn = true;
+//                    show_tutorial(mDrumKitList[0], R.id.kick_it);
+//                } else {
+//                    start_game();
+//                }
+//            }
+//        });
+//    }
+
+
 //    private class powerUpRunnable implements Runnable {
 //        @Override
 //        public void run() {
@@ -512,90 +597,4 @@ public class PlayScreen extends AppCompatActivity {
 //            mMultiplierPowerUp = 1;
 ////            mPowerUpImageView.setImageResource(R.drawable.question_mark);
 //        }
-//    }
-
-    private class gameProgressBarRunnable implements Runnable {
-        @Override
-        public void run() {
-            while (mFansPercentage > 0) {
-                SystemClock.sleep(200);
-                if(!freeze_power_up_activated) mFansPercentage = mFansPercentage - 1;
-                mFansPercentBar.setProgress(mFansPercentage);
-            }
-//            while (mFansPercentage > 0) {
-//                SystemClock.sleep(500);
-//                if (mFansPercentage < 100) mFansPercentage = mFansPercentage + 1;
-//                mFansPercentBar.setProgress(mFansPercentage);
-//            }
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    end_game("progress over");
-                }
-            });
-        }
-    }
-
-    private void setup_game(){
-        setup_selected_mode();
-        // Loading sounds
-        setup_sounds();
-
-        setup_tts();
-
-        mDrumSelectorHandler = new UserWaitingHandlerThread(PlayScreen.this);
-        mDrumSelectorHandler.start();
-        mPowerUpHandler = new UserWaitingHandlerThread(PlayScreen.this);
-        mPowerUpHandler.start();
-        mFansProgressHandler = new UserWaitingHandlerThread(PlayScreen.this);
-        mFansProgressHandler.start();
-
-        start_game();
-    }
-
-    private void checkFirstRun() {
-        // Get current version code
-        int currentVersionCode = BuildConfig.VERSION_CODE;
-
-        // Get saved version code
-        int savedVersionCode = mGameSettings.getCurrentVersion();
-
-        // Check for first run or upgrade
-        if (savedVersionCode == -1) {
-            // This is a new install (or the user cleared the shared preferences)
-            Toast.makeText(PlayScreen.this, "This is first time", Toast.LENGTH_LONG).show();  // Remove This
-        } else if (currentVersionCode >= savedVersionCode) {
-            // This is just a normal run
-            // No effect even if there is an upgrade as of now
-            setup_game();
-            return;
-        }
-        /*
-            else if (currentVersionCode > savedVersionCode) {
-                //  Runs when user upgrades app.
-                //  Not required as of now
-            }
-
-        */
-
-        // Update the shared preferences with the current version code
-        mGameSettings.updateVersionCode(currentVersionCode);
-    }
-}
-
-//    private void open_start_game_dialog() {
-//        final GameStartDialog start_game_popup = new GameStartDialog(PlayScreen.this, mGameSettings);
-//        start_game_popup.show_dialog();
-//        start_game_popup.start_play_btn.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                start_game_popup.dismiss_dialog();
-//                setup_selected_mode();
-//                if (mGameSettings.getShowTutorial()) {
-//                    mTutorialOn = true;
-//                    show_tutorial(mDrumKitList[0], R.id.kick_it);
-//                } else {
-//                    start_game();
-//                }
-//            }
-//        });
 //    }
