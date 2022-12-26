@@ -97,17 +97,17 @@ public class ClassicMode extends GameMode{
             public void onClick(View v) {
                 endGameDialog.dismiss_dialog();
                 Intent main_menu_screen = new Intent(context, MainMenu.class);
-                context.startActivity(main_menu_screen);
                 context.finish();
+                context.startActivity(main_menu_screen);
             }
         });
 
         endGameDialog.play_again_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 endGameDialog.dismiss_dialog();
-                Intent play_again_btn = new Intent(context, PlayScreen.class);
-                context.startActivity(play_again_btn);
+                Intent play_again_btn = new Intent(context, context.getClass());
                 context.finish();
+                context.startActivity(play_again_btn);
             }
         });
         endGameDialog.setCancelable(false);

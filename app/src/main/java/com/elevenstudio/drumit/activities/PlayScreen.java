@@ -164,17 +164,20 @@ public class PlayScreen extends AppCompatActivity {
     private void resume_game() {
         if (mGamePaused && mBeatsRecorder != 0) mSelectedModeObj.getGame_mode().resumeTimer();
         mGamePaused = false;
+        mDrumSelectorHandler.getWaitingHandler().postDelayed(new UserOptionRunnable(), mNextDrumTimer);
     }
 
     private void pause_game() {
         mGamePaused = true;
-        mDrumSelectorHandler.interrupt();
+        set_eng_selected_view("");
+//        mDrumSelectorHandler.interrupt();
         mSelectedModeObj.getGame_mode().stopTimer();
         final PauseGameDialog pause_popup = new PauseGameDialog(PlayScreen.this);
         pause_popup.show_dialog();
         mPauseDialogOpen = true;
         pause_popup.resume_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                mNextDrumTimer = mNextDrumTimer + 5;
                 resume_game();
                 pause_popup.dismiss_dialog();
                 mPauseDialogOpen = false;
@@ -300,7 +303,7 @@ public class PlayScreen extends AppCompatActivity {
                 view.clearAnimation();
                 mTutorialSequence = 7;
                 mTutorialOn = false;
-//                setup_game();
+                setup_game();
             }
             return;
         }
@@ -393,6 +396,7 @@ public class PlayScreen extends AppCompatActivity {
 
         @Override
         public void run() {
+            Log.i("Gameprogress", "*************************going to run run_bg_process");
             run_bg_process();
         }
 
@@ -401,7 +405,7 @@ public class PlayScreen extends AppCompatActivity {
     private void end_game(String msg) {
         set_eng_selected_view("game over");
         mDrumSelectorHandler.quit();
-        mPowerUpHandler.quit();
+//        mPowerUpHandler.quit();
         mFansProgressHandler.quit();
         mSelectedModeObj.getGame_mode().stopTimer();
         mSelectedModeObj.getGame_mode().update_stats_in_prefs(mBeatsRecorder);
@@ -426,8 +430,10 @@ public class PlayScreen extends AppCompatActivity {
 
                         @Override
                         public void onDone(String utteranceId) {
+                            Log.i("Handler", "{{{{{{{{{{{{{{" + utteranceId);
                             if (utteranceId.equals("mostRecentUtteranceID")) {
                                 Log.i("Gameprogress", "entered onDone");
+                                Log.i("Handler", "----------------------------entered onDone");
                                 mDrumSelectorHandler.getWaitingHandler().postAtFrontOfQueue(new UserWaitingRunnable());
                             }
                         }
@@ -444,6 +450,7 @@ public class PlayScreen extends AppCompatActivity {
     public void speakWord(String string) {
         HashMap<String, String> params = new HashMap<>();
         params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "mostRecentUtteranceID");
+        Log.i("Handler", "/////////////////////////speaking;;;;;;;;;;;;");
         mSelectedDrumTTS.speak(string, TextToSpeech.QUEUE_FLUSH, params);
     }
 
@@ -453,14 +460,18 @@ public class PlayScreen extends AppCompatActivity {
         public void run() {
 //            SystemClock.sleep(mSelectedModeObj.getGame_mode().get_delay_time(mBeatsRecorder));
 //            next_option_work();
-            mDrumSelectorHandler.getWaitingHandler().postDelayed(new UserOptionRunnable(), getTimeIntervalGap());
+            Log.i("Handler", ">>>>>>>>>>>>>>>>>>>>>entered run_UserWaitingRunnable");
+            Log.i("Handler", "====================entered inside run_UserWaitingRunnable");
+            if(!mGamePaused){
+                mDrumSelectorHandler.getWaitingHandler().postDelayed(new UserOptionRunnable(), getTimeIntervalGap());
+            }
         }
 //        private void next_option_work() {
 //            mDrumSelectorHandler.getWaitingHandler().postAtFrontOfQueue(new UserOptionRunnable());
 //        }
 
         private int getTimeIntervalGap(){
-            if(mNextDrumTimer > 300) mNextDrumTimer = mNextDrumTimer - 50;
+            if(mNextDrumTimer > 300) mNextDrumTimer = mNextDrumTimer - 10;
             return mNextDrumTimer;
         }
     }
@@ -469,9 +480,11 @@ public class PlayScreen extends AppCompatActivity {
         @Override
         public void run() {
             while (mFansPercentage > 0) {
-                SystemClock.sleep(200);
-                 mFansPercentage = mFansPercentage - 1; // if(!freeze_power_up_activated)
-                mFansPercentBar.setProgress(mFansPercentage);
+                if(!mGamePaused){
+                    SystemClock.sleep(200);
+                    mFansPercentage = mFansPercentage - 1; // if(!freeze_power_up_activated)
+                    mFansPercentBar.setProgress(mFansPercentage);
+                }
             }
 //            while (mFansPercentage > 0) {
 //                SystemClock.sleep(500);
@@ -491,11 +504,12 @@ public class PlayScreen extends AppCompatActivity {
 
         mDrumSelectorHandler = new UserWaitingHandlerThread(PlayScreen.this);
         mDrumSelectorHandler.start();
-        mPowerUpHandler = new UserWaitingHandlerThread(PlayScreen.this);
-        mPowerUpHandler.start();
+//        mPowerUpHandler = new UserWaitingHandlerThread(PlayScreen.this);
+//        mPowerUpHandler.start();
         mFansProgressHandler = new UserWaitingHandlerThread(PlayScreen.this);
         mFansProgressHandler.start();
 
+        SystemClock.sleep(2000);
         start_game();
     }
 
@@ -504,7 +518,7 @@ public class PlayScreen extends AppCompatActivity {
         int currentVersionCode = BuildConfig.VERSION_CODE;
 
         // Get saved version code
-        int savedVersionCode = -1; // mGameSettings.getCurrentVersion();
+        int savedVersionCode = mGameSettings.getCurrentVersion(); // -1
 
         setup_sounds(); setup_tts(); setup_selected_mode();
 
